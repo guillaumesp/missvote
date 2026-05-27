@@ -13,7 +13,7 @@ export default function ActionButtons({ onVote, disabled }) {
             disabled={disabled}
             onClick={() => onVote?.(key)}
             className="group relative w-14 h-14 rounded-full flex items-center justify-center text-2xl bg-[var(--color-surface)] border border-[var(--color-border)] transition-transform active:scale-90 disabled:opacity-30 disabled:cursor-not-allowed"
-            style={{ boxShadow: `0 6px 20px rgba(0,0,0,0.5), inset 0 0 0 1px ${n.hex}33` }}
+            style={{ boxShadow: `0 4px 14px rgba(28,20,9,0.12), inset 0 0 0 1px ${n.hex}33` }}
           >
             <span
               className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"

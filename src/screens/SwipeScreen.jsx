@@ -92,7 +92,7 @@ function EmptyState({ onReset }) {
           className="py-3 rounded-xl text-center font-medium"
           style={{
             background: 'linear-gradient(90deg, var(--color-gold), var(--color-gold-light))',
-            color: '#0a0a0a'
+            color: 'var(--color-text)'
           }}
         >
           Voir les résultats

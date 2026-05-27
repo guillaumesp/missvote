@@ -5,7 +5,7 @@ export default function BottomNav({ remaining, voted }) {
     <nav
       className="fixed bottom-0 inset-x-0 z-40 border-t border-[var(--color-border)]"
       style={{
-        background: 'rgba(10,10,10,0.7)',
+        background: 'rgba(248,244,238,0.85)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
         paddingBottom: 'env(safe-area-inset-bottom)'
@@ -39,7 +39,7 @@ function Tab({ to, label, icon, badge }) {
               className="absolute top-1 right-[35%] min-w-[18px] h-[18px] px-1 rounded-full text-[10px] flex items-center justify-center font-semibold"
               style={{
                 background: isActive ? 'var(--color-gold)' : 'var(--color-surface-2)',
-                color: isActive ? '#0a0a0a' : 'var(--color-text)',
+                color: isActive ? 'var(--color-text)' : 'var(--color-text)',
                 border: '1px solid var(--color-border)'
               }}
             >

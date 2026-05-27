@@ -87,7 +87,7 @@ export default function ResultsScreen() {
           className="flex-1 py-2.5 rounded-xl text-sm font-medium"
           style={{
             background: 'linear-gradient(90deg, var(--color-gold), var(--color-gold-light))',
-            color: '#0a0a0a'
+            color: 'var(--color-text)'
           }}
         >
           Exporter Excel
@@ -141,7 +141,7 @@ function Chip({ active, onClick, label, color }) {
       className="shrink-0 px-3 py-1.5 rounded-full text-xs border transition-colors whitespace-nowrap"
       style={{
         background: active ? (color ? `${color}22` : 'var(--color-gold)') : 'transparent',
-        color: active ? (color || '#0a0a0a') : 'var(--color-text)',
+        color: active ? (color || 'var(--color-text)') : 'var(--color-text)',
         borderColor: active ? (color || 'var(--color-gold)') : 'var(--color-border)'
       }}
     >

@@ -64,7 +64,7 @@ function PhotoOrPlaceholder({ candidate }) {
   const [err, setErr] = useState(false)
   if (err || !candidate.photo) {
     return (
-      <div className="w-full aspect-[4/5] bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] flex items-center justify-center text-[var(--color-gold)] text-6xl font-display">
+      <div className="w-full aspect-[4/5] bg-gradient-to-b from-[var(--color-surface-2)] to-[var(--color-border)] flex items-center justify-center text-[var(--color-gold)] text-6xl font-display">
         {candidate.prenom?.[0]}
         {candidate.nom?.[0]}
       </div>

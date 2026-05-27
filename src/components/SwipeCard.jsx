@@ -125,18 +125,18 @@ export default function SwipeCard({ candidate, onSwipe, isTop, stackIndex = 0 })
         </div>
 
         {/* Info overlay */}
-        <div className="absolute inset-x-0 bottom-0 p-5 text-[var(--color-text)]">
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-[11px] uppercase tracking-wider mb-2 border border-[var(--color-gold)]/40 bg-black/40 backdrop-blur text-[var(--color-gold-light)]">
+        <div className="absolute inset-x-0 bottom-0 p-5 text-white">
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-[11px] uppercase tracking-wider mb-2 border border-[var(--color-gold-light)]/40 bg-black/40 backdrop-blur text-[var(--color-gold-light)]">
             {candidate.region}
           </div>
           <h2 className="font-display text-3xl leading-tight drop-shadow">
             {candidate.prenom} <span className="text-[var(--color-gold-light)]">{candidate.nom}</span>
           </h2>
-          <div className="mt-1 text-sm text-[var(--color-text)]/80">
+          <div className="mt-1 text-sm text-white/80">
             {candidate.age} ans · {candidate.ville}
           </div>
           {candidate.bio && (
-            <p className="mt-2 text-xs text-[var(--color-text)]/70 line-clamp-2">{candidate.bio}</p>
+            <p className="mt-2 text-xs text-white/70 line-clamp-2">{candidate.bio}</p>
           )}
           {candidate.instagram && (
             <a
@@ -210,7 +210,7 @@ function DirectionalBadge({ opacity, label, emoji, color, align }) {
 
 function PlaceholderSilhouette() {
   return (
-    <div className="w-full h-full flex items-center justify-center bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a]">
+    <div className="w-full h-full flex items-center justify-center bg-gradient-to-b from-[var(--color-surface-2)] to-[var(--color-border)]">
       <svg viewBox="0 0 200 240" className="w-1/2 h-1/2 opacity-40">
         <defs>
           <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
