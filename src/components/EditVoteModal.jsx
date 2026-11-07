@@ -80,6 +80,7 @@ function Mini({ candidate }) {
       {candidate.photo ? (
         <img
           src={candidate.photo}
+          referrerPolicy="no-referrer"
           alt=""
           className="w-full h-full object-cover"
           onError={(e) => (e.currentTarget.style.display = 'none')}

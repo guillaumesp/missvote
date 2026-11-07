@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
 
-const STORAGE_KEY = 'missVote_votes'
+import data from '../assets/candidates.json'
+
+// Une clé par édition : les votes d'une année ne se mélangent pas à la suivante
+// (les ids 001, 002… sont réutilisés d'une édition à l'autre).
+const STORAGE_KEY = `missVote_votes_${data.annee}`
 
 function readVotes() {
   try {

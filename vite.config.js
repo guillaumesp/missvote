@@ -38,7 +38,9 @@ export default defineConfig({
           {
             urlPattern: ({ url }) =>
               url.hostname === 'upload.wikimedia.org' ||
-              url.hostname === 'www.miss-france.fr',
+              url.hostname === 'www.miss-france.fr' ||
+              url.hostname === 'static1.purepeople.com' ||
+              url.hostname === 'www.lnc.nc',
             handler: 'CacheFirst',
             options: {
               cacheName: 'candidate-photos',

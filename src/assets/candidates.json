@@ -1,368 +1,531 @@
 {
-  "edition": "Miss France 2025",
-  "annee": 2025,
-  "date_election": "2024-12-14",
-  "lieu": "Futuroscope, Poitiers",
+  "edition": "Miss France 2027",
+  "annee": 2027,
+  "date_election": "2026-12-12",
+  "lieu": "Arena Futuroscope, Poitiers",
   "candidates": [
     {
       "id": "001",
-      "prenom": "Angélique",
-      "nom": "Angarni-Filopon",
-      "region": "Martinique",
-      "age": 33,
-      "ville": "Fort-de-France",
-      "photo": "https://photos.tf1info.fr/images/767/1148/martinique-miss-france-2025-angelique-angarni-filopon-c190ac-0@1x.jpeg",
-      "instagram": "angeliqueangarni",
-      "bio": "Professeure des écoles. Élue Miss France 2025. Première Miss France de plus de 30 ans.",
-      "classement": "Miss France 2025"
+      "prenom": "Chiara",
+      "nom": "Blazevic",
+      "region": "Alsace",
+      "age": 24,
+      "taille": 1.76,
+      "ville": "Rantzwiller",
+      "photo": "https://static1.purepeople.com/uploads/26/8a/2c/c4/88c24217b601ee5a-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/26/8a/2c/c4/88c24217b601ee5a-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/0e/0d/79/12/2221279eeeed3dec-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/24/e8/19/fd/d8e9aa4e5d7dbf7e-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/be/19/4e/81/b80cd721de214bf4-580x0-1.jpg"
+      ],
+      "instagram": "chiarablazevic.off",
+      "bio": "Titulaire d'un BTS communication, travaille dans une agence de communication à Mulhouse. Alsacienne par sa mère, d'origine italo-croate par son père."
     },
     {
       "id": "002",
-      "prenom": "Sabah",
-      "nom": "Aïb",
-      "region": "Nord-Pas-de-Calais",
-      "age": 18,
-      "ville": "Besançon",
-      "photo": "https://photos.tf1info.fr/images/767/1144/npdc-miss-france-2025-calais-sabah-aib-5bc46e-0@1x.jpeg",
-      "instagram": "sabah.aib",
-      "bio": "Étudiante. 1re dauphine de Miss France 2025.",
-      "classement": "1re dauphine"
+      "prenom": "Solène",
+      "nom": "Videau",
+      "region": "Aquitaine",
+      "age": 22,
+      "taille": 1.73,
+      "ville": "Mérignac",
+      "photo": "https://static1.purepeople.com/uploads/27/76/87/f0/bde0fb1f7267cde8-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/27/76/87/f0/bde0fb1f7267cde8-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/aa/fc/07/a6/0dfc0b6f3956a817-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/2f/2b/21/36/6ca68607845c6ed4-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/10/a4/d8/7c/d47e157f10c866d2-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/0e/3d/ab/2e/9b9022e3497d646a-580x0-1.jpg"
+      ],
+      "instagram": "solene.videau",
+      "bio": "Termine un Bachelor dans la mode. Engagée auprès des enfants malades."
     },
     {
       "id": "003",
-      "prenom": "Stella",
-      "nom": "Vangioni",
-      "region": "Corse",
-      "age": 22,
-      "ville": "Ajaccio",
-      "photo": "https://photos.tf1info.fr/images/767/1157/corse-miss-france-2025-stella-vangioni-2cbd57-0@1x.jpeg",
-      "instagram": "stellavangioni",
-      "bio": "Étudiante en droit. 2e dauphine de Miss France 2025.",
-      "classement": "2e dauphine"
+      "prenom": "Lina",
+      "nom": "Berthelier",
+      "region": "Auvergne",
+      "age": 24,
+      "taille": 1.73,
+      "ville": "Commentry",
+      "photo": "https://static1.purepeople.com/uploads/65/33/ee/4e/a61c561038b9ec06-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/65/33/ee/4e/a61c561038b9ec06-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/a5/ab/0c/06/5fe4542a2e1b44cc-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/df/59/e9/8f/996b0d39619bb567-580x0-1.jpg"
+      ],
+      "bio": "Master 2 en alternance comme ingénieure commerciale."
     },
     {
       "id": "004",
-      "prenom": "Moïra",
-      "nom": "André",
-      "region": "Guadeloupe",
-      "age": 24,
-      "ville": "Pointe-à-Pitre",
-      "photo": "https://photos.tf1info.fr/images/767/1148/guadeloupe-miss-france-2025-moira-andre-b5b05d-0@1x.jpeg",
-      "instagram": "moiraandre",
-      "bio": "Étudiante en master de management. 3e dauphine de Miss France 2025.",
-      "classement": "3e dauphine"
+      "prenom": "Ilona",
+      "nom": "Perrot",
+      "region": "Bourgogne",
+      "age": 23,
+      "taille": 1.76,
+      "ville": "La Fermeté",
+      "photo": "https://static1.purepeople.com/uploads/54/87/83/f2/a3b1ad5c8ad30d57-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/54/87/83/f2/a3b1ad5c8ad30d57-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/be/6d/53/7e/a13ac6d34821e51c-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/84/e5/6d/0e/77f2fd34ee5116f4-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/c1/25/1e/d4/fc5c5f923df4b9b7-580x0-1.jpg"
+      ],
+      "instagram": "ilonaperrot.off",
+      "bio": "Infirmière spécialisée en psychiatrie, passionnée de danse. Veut sensibiliser à la santé mentale et au don du sang."
     },
     {
       "id": "005",
-      "prenom": "Lilou",
-      "nom": "Émeline-Artuso",
-      "region": "Côte d'Azur",
-      "age": 21,
-      "ville": "Nice",
-      "photo": "https://photos.tf1info.fr/images/767/1140/cote-d-azur-miss-france-2025-lilou-emeline-artuso-93d0b2-0@1x.jpeg",
-      "instagram": "lilou.emeline",
-      "bio": "Étudiante en master de stratégie digitale. 4e dauphine de Miss France 2025.",
-      "classement": "4e dauphine"
+      "prenom": "Margot",
+      "nom": "Ferré-Bernard",
+      "region": "Bretagne",
+      "age": 20,
+      "taille": 1.71,
+      "ville": "Guipavas",
+      "photo": "https://static1.purepeople.com/uploads/61/13/c4/38/81e4bbcae67f2ddc-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/61/13/c4/38/81e4bbcae67f2ddc-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/6b/61/28/ee/1b9eb2de207b71bf-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/45/18/50/92/ba40988af6b769c5-580x0-1.png"
+      ],
+      "bio": "Étudiante en droit à Brest, ambitionne de devenir juge des enfants."
     },
     {
       "id": "006",
-      "prenom": "Clara",
-      "nom": "Diry",
-      "region": "Bourgogne",
-      "age": 20,
-      "ville": "Dijon",
-      "photo": "https://photos.tf1info.fr/images/767/1152/bourgogne-miss-france-2025-clara-diry-ef111a-0@1x.jpeg",
-      "instagram": "claradiry",
-      "bio": "Étudiante en licence de droit. 5e dauphine de Miss France 2025.",
-      "classement": "5e dauphine"
+      "prenom": "Justine",
+      "nom": "Bourrelier",
+      "region": "Centre-Val de Loire",
+      "age": 26,
+      "taille": 1.76,
+      "ville": "Dammarie",
+      "photo": "https://static1.purepeople.com/uploads/bc/43/9f/f2/b6bd3aa188efa7e0-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/bc/43/9f/f2/b6bd3aa188efa7e0-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/6f/b0/8a/bf/effc2c687c47e657-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/78/8a/eb/b8/9d5c6ea28cf869ec-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/2d/aa/84/51/771388c0333c29eb-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/53/6f/ae/ea/7b0536f02536ad54-580x0-1.jpg"
+      ],
+      "bio": "Cheffe de projet marketing, férue de voyages. 3e dauphine de Miss Centre-Val de Loire 2023."
     },
     {
       "id": "007",
-      "prenom": "Laura",
-      "nom": "Marque",
-      "region": "Aquitaine",
+      "prenom": "Céline",
+      "nom": "Leduc",
+      "region": "Champagne-Ardenne",
       "age": 23,
-      "ville": "Bordeaux",
-      "photo": "https://photos.tf1info.fr/images/767/1154/aquitaine-miss-france-2025-laura-marque-eaa5f7-2@1x.jpeg",
-      "instagram": "lauramarque_",
-      "bio": "Étudiante en master de commerce international. 6e dauphine de Miss France 2025.",
-      "classement": "6e dauphine"
+      "taille": 1.83,
+      "ville": "Tagnon",
+      "photo": "https://static1.purepeople.com/uploads/50/ac/79/5c/8b0fa378e2eed49c-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/50/ac/79/5c/8b0fa378e2eed49c-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/ca/21/eb/01/8a41343b83c34278-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/19/96/93/ec/466c384c5bb0cb94-580x0-1.jpg"
+      ],
+      "bio": "Titulaire d'un master pour devenir professeure des écoles. 3e de Miss Champagne-Ardenne 2024."
     },
     {
       "id": "008",
-      "prenom": "Marina",
-      "nom": "Przadka",
-      "region": "Picardie",
-      "age": 21,
-      "ville": "Amiens",
-      "photo": "https://photos.tf1info.fr/images/767/1149/picardie-miss-france-2025-marina-przadka-a8b187-0@1x.jpeg",
-      "instagram": "marina.przadka",
-      "bio": "Étudiante en école de commerce. Lauréate du Prix de la culture générale (15,5/20). Prix du défilé.",
-      "classement": "Top 15"
+      "prenom": "Satine",
+      "nom": "Nomary",
+      "region": "Corse",
+      "age": 20,
+      "taille": 1.76,
+      "ville": "Grosseto-Prugna",
+      "photo": "https://static1.purepeople.com/uploads/f6/e2/45/29/be4caf100e34ec2c-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/f6/e2/45/29/be4caf100e34ec2c-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/0e/02/c9/2a/6d78ed3875af8847-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/94/f8/93/54/0028ebedd218b0f9-580x0-1.png",
+        "https://static1.purepeople.com/uploads/cf/32/b4/69/6a0b363fefb316c1-580x0-1.png"
+      ],
+      "instagram": "satinenomary",
+      "bio": "Hôtesse de l'air, passionnée de volley-ball et de piano."
     },
     {
       "id": "009",
-      "prenom": "Assia",
-      "nom": "Roosz-Tomenti",
-      "region": "Lorraine",
+      "prenom": "May",
+      "nom": "Haoues",
+      "region": "Côte d'Azur",
       "age": 19,
-      "ville": "Nancy",
-      "photo": "https://photos.tf1info.fr/images/767/1149/lorraine-miss-france-2025-assia-roosz-tomenti-0b3ce4-0@1x.jpeg",
-      "instagram": "assiaroosz",
-      "bio": "Étudiante en BTS communication.",
-      "classement": "Top 15"
+      "taille": 1.74,
+      "ville": "Cagnes-sur-Mer",
+      "photo": "https://static1.purepeople.com/uploads/f9/b8/8f/90/872cae61e1ffba62-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/f9/b8/8f/90/872cae61e1ffba62-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/03/bd/bb/1b/501399319ec0d190-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/29/e9/d9/51/68b93d3f841b50eb-580x0-1.jpg"
+      ],
+      "bio": "Étudiante à l'EDHEC Nice, fille de vétérinaires, engagée pour la protection animale."
     },
     {
       "id": "010",
-      "prenom": "Lucile",
-      "nom": "Lecellier",
-      "region": "Normandie",
-      "age": 22,
-      "ville": "Rouen",
-      "photo": "https://photos.tf1info.fr/images/767/1146/normandie-miss-france-2025-lucie-lecellier-643f8d-0@1x.jpeg",
-      "instagram": "lucilelecellier",
-      "bio": "Étudiante en master de psychologie.",
-      "classement": "Top 15"
+      "prenom": "Emma",
+      "nom": "Ninot",
+      "region": "Franche-Comté",
+      "age": 21,
+      "taille": 1.75,
+      "ville": "Laire",
+      "photo": "https://static1.purepeople.com/uploads/b3/60/ea/43/7908ebcc0619db49-580x0-1.png",
+      "photos": [
+        "https://static1.purepeople.com/uploads/b3/60/ea/43/7908ebcc0619db49-580x0-1.png"
+      ],
+      "bio": "Vient d'achever ses études d'infirmière. Sauveteuse en mer l'été depuis cinq ans."
     },
     {
       "id": "011",
-      "prenom": "Isabella",
-      "nom": "Hebert",
-      "region": "Alsace",
+      "prenom": "Julia",
+      "nom": "Désirée",
+      "region": "Guadeloupe",
       "age": 20,
-      "ville": "Strasbourg",
-      "photo": "https://photos.tf1info.fr/images/767/1145/alsace-miss-france-2025-isabella-hebert-2d7f90-3@1x.jpeg",
-      "instagram": "isabella.hebert",
-      "bio": "Étudiante en licence d'anglais.",
-      "classement": "Top 15"
+      "taille": 1.81,
+      "ville": "Les Abymes",
+      "photo": "https://static1.purepeople.com/uploads/d6/4a/72/39/01ba3d27a7aad481-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/d6/4a/72/39/01ba3d27a7aad481-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/e3/cd/aa/2e/8ff756e5478e56f6-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/74/52/c9/ff/3f9f1695db345b12-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/32/cb/48/ac/d93d819e316a8813-580x0-1.jpg"
+      ],
+      "bio": "Conseillère en parfumerie et cosmétique, engagée contre les violences faites aux femmes."
     },
     {
       "id": "012",
-      "prenom": "Olivia",
-      "nom": "Sirena",
-      "region": "Midi-Pyrénées",
-      "age": 21,
-      "ville": "Toulouse",
-      "photo": "https://photos.tf1info.fr/images/767/1155/midi-pyre-e-ne-es-miss-france-2025-olivia-sirena-411842-0@1x.jpeg",
-      "instagram": "oliviasirena",
-      "bio": "Étudiante en école d'ingénieur.",
-      "classement": "Top 15"
+      "prenom": "Sandra",
+      "nom": "Justine",
+      "region": "Guyane",
+      "age": 23,
+      "taille": 1.77,
+      "ville": "Kourou",
+      "photo": "https://static1.purepeople.com/uploads/12/04/a8/81/b6a409caf34a1e3b-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/12/04/a8/81/b6a409caf34a1e3b-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/35/91/97/a2/9668ee00f4b6fcbd-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/89/9b/63/d6/3e314511687a2565-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/1f/54/66/f3/778d963a792919e6-580x0-1.jpg"
+      ],
+      "bio": "Infirmière et coordinatrice dans la petite enfance. Dyslexique, veut sensibiliser à ce trouble."
     },
     {
       "id": "013",
-      "prenom": "Temanava",
-      "nom": "Domingo",
-      "region": "Tahiti",
-      "age": 18,
-      "ville": "Papeete",
-      "photo": "https://photos.tf1info.fr/images/767/1154/tahiti-miss-france-2025-temanava-domingo-e90c51-0@1x.jpeg",
-      "instagram": "temanava.domingo",
-      "bio": "Lycéenne.",
-      "classement": "Top 15"
+      "prenom": "Camilla",
+      "nom": "Alash",
+      "region": "Île-de-France",
+      "age": 24,
+      "taille": 1.81,
+      "ville": "Clichy",
+      "photo": "https://static1.purepeople.com/uploads/75/3f/70/07/98acb958fcaea84c-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/75/3f/70/07/98acb958fcaea84c-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/1c/03/2a/d5/dc53c8f174259456-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/71/fa/a6/87/50951868e7d2a0e9-580x0-1.jpg"
+      ],
+      "bio": "Études de journalisme, joueuse de tennis et mannequin."
     },
     {
       "id": "014",
-      "prenom": "Louison",
-      "nom": "Thévenin",
-      "region": "Champagne-Ardenne",
-      "age": 20,
-      "ville": "Reims",
-      "photo": "https://photos.tf1info.fr/images/767/1144/champagne-ardenne-miss-france-2025-louison-thevenin-470475-0@1x.jpeg",
-      "instagram": "louison.thevenin",
-      "bio": "Étudiante en école de commerce.",
-      "classement": "Top 15"
+      "prenom": "Candice",
+      "nom": "Gauch",
+      "region": "Languedoc",
+      "age": 29,
+      "taille": 1.77,
+      "ville": "Mende",
+      "photo": "https://static1.purepeople.com/uploads/bd/f4/38/3c/725144380175fe32-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/bd/f4/38/3c/725144380175fe32-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/c7/cc/0b/8f/2e8f5ddee3bb617f-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/d1/3b/a3/9a/bb7b6433b59dbe33-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/a9/a7/15/ac/e3a4e125494c9e69-580x0-1.jpg"
+      ],
+      "bio": "Consultante, originaire de Lozère. Miss Paris 2025."
     },
     {
       "id": "015",
-      "prenom": "Alexcia",
-      "nom": "Couly",
-      "region": "Rhône-Alpes",
+      "prenom": "Élise",
+      "nom": "Escuriol",
+      "region": "Limousin",
       "age": 22,
-      "ville": "Lyon",
-      "photo": "https://photos.tf1info.fr/images/767/1145/rho-ne-alpes-miss-france-2025-alexcia-couly-a6ebfd-0@1x.jpeg",
-      "instagram": "alexciacouly",
-      "bio": "Étudiante en master de gestion du patrimoine.",
-      "classement": "Top 15"
+      "taille": 1.74,
+      "ville": "Brive-la-Gaillarde",
+      "photo": "https://static1.purepeople.com/uploads/7c/b2/76/03/9f1b4fcfd687c616-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/7c/b2/76/03/9f1b4fcfd687c616-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/1c/55/c9/30/b8610751ad6550cc-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/1c/f5/31/9f/7dff0d7c04af8fe3-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/dd/fb/ee/c1/b14f0bef83aefef5-580x0-1.jpg"
+      ],
+      "instagram": "elise_.escuriol",
+      "bio": "Étudiante en gestion des entreprises et des administrations. 1re dauphine de Miss Limousin 2025."
     },
     {
       "id": "016",
-      "prenom": "Romane",
-      "nom": "Agostinho",
-      "region": "Auvergne",
-      "age": 20,
-      "ville": "Clermont-Ferrand",
-      "photo": "https://photos.tf1info.fr/images/767/1148/auvergne-miss-france-2025-romane-agostinho-f693f0-0@1x.jpeg",
-      "instagram": "romane.agostinho",
-      "bio": "Étudiante en école de commerce.",
-      "classement": "Candidate"
+      "prenom": "Léane",
+      "nom": "Froment",
+      "region": "Lorraine",
+      "age": 21,
+      "taille": 1.72,
+      "ville": "Gondreville",
+      "photo": "https://static1.purepeople.com/uploads/dd/31/99/7c/611bcf5aedab7e24-580x0-1.png",
+      "photos": [
+        "https://static1.purepeople.com/uploads/dd/31/99/7c/611bcf5aedab7e24-580x0-1.png"
+      ],
+      "bio": "Étudiante en BTS management, passionnée d'équitation, engagée pour la cause animale."
     },
     {
       "id": "017",
-      "prenom": "Mélissa",
-      "nom": "Atta Bessiom",
-      "region": "Pays de la Loire",
-      "age": 21,
-      "ville": "Nantes",
-      "photo": "https://photos.tf1info.fr/images/767/1156/pays-de-la-loire-miss-france-2025-melissa-atta-bessiom-358440-1@1x.jpeg",
-      "instagram": "melissa.attabessiom",
-      "bio": "Née à Londres, origines camerounaises. Étudiante en master marketing.",
-      "classement": "Candidate"
+      "prenom": "Maureen-Alycia",
+      "nom": "Lucéa-Merlin",
+      "region": "Martinique",
+      "age": 24,
+      "taille": 1.76,
+      "ville": "Fort-de-France",
+      "photo": "https://static1.purepeople.com/uploads/ba/9d/91/09/f1b5442cc9bdcda4-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/ba/9d/91/09/f1b5442cc9bdcda4-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/96/cc/74/0c/de26788a728ebf22-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/3e/96/bc/dd/ddef318f14fb53a4-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/b4/fb/69/fa/6ae330854c9c085b-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/1b/20/41/0a/ede49893309295ee-580x0-1.jpg"
+      ],
+      "bio": "Master en management d'établissements de santé, travaillait dans un Ehpad à Lyon."
     },
     {
       "id": "018",
-      "prenom": "Charlie",
-      "nom": "Benard",
-      "region": "Poitou-Charentes",
-      "age": 22,
-      "ville": "Poitiers",
-      "photo": "https://photos.tf1info.fr/images/767/1154/poitou-charentes-miss-france-2025-charlie-bernard-23290e-0@1x.jpeg",
-      "instagram": "charliebenard_",
-      "bio": "Étudiante en master de droit.",
-      "classement": "Candidate"
+      "prenom": "Emma",
+      "nom": "Saïd Issouf",
+      "region": "Mayotte",
+      "age": 24,
+      "taille": 1.76,
+      "ville": "Mamoudzou",
+      "photo": "https://static1.purepeople.com/uploads/39/cd/e6/aa/f8e2c1bf0d151a8a-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/39/cd/e6/aa/f8e2c1bf0d151a8a-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/7b/8f/ce/ab/c1990538d1c86ade-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/3a/7b/2d/57/f67ebbd5bd3daa63-580x0-1.jpg"
+      ],
+      "bio": "Licence de lettres modernes, souhaite devenir professeure des écoles."
     },
     {
       "id": "019",
-      "prenom": "Marine",
-      "nom": "Futol",
-      "region": "Réunion",
-      "age": 19,
-      "ville": "Saint-Denis",
-      "photo": "https://photos.tf1info.fr/images/767/1143/re-union-miss-france-2025-marine-futol-0ad5a6-0@1x.jpeg",
-      "instagram": "marinefutol",
-      "bio": "Étudiante en 1re année de droit.",
-      "classement": "Candidate"
+      "prenom": "Carla",
+      "nom": "Rachaïl",
+      "region": "Midi-Pyrénées",
+      "age": 23,
+      "taille": 1.74,
+      "ville": "Toulouse",
+      "photo": "https://static1.purepeople.com/uploads/ab/ea/d4/f3/ee1f22ce42b77fce-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/ab/ea/d4/f3/ee1f22ce42b77fce-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/e0/7e/88/ba/bfd749038c154e39-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/d3/da/95/8c/f3a496cba5e65de1-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/53/dd/b3/de/03d922f897f3126b-580x0-1.jpg"
+      ],
+      "bio": "Ancienne joueuse de rugby, reçue au concours de sous-officier de gendarmerie."
     },
     {
       "id": "020",
-      "prenom": "Zaya",
-      "nom": "Toumbou",
-      "region": "Mayotte",
-      "age": null,
-      "ville": "Mamoudzou",
-      "photo": "https://photos.tf1info.fr/images/767/1151/mayotte-miss-france-2025-zaya-toumbou-6eaeb2-0@1x.jpeg",
-      "instagram": null,
-      "bio": null,
-      "classement": "Candidate"
+      "prenom": "Shana",
+      "nom": "Mendes",
+      "region": "Nord-Pas-de-Calais",
+      "age": 18,
+      "taille": 1.75,
+      "ville": "Hem",
+      "photo": "https://static1.purepeople.com/uploads/79/27/e7/b8/0b61412cfc307dc4-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/79/27/e7/b8/0b61412cfc307dc4-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/bc/4a/9c/ae/c9d3cbed535f220a-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/86/e0/c6/2e/91172222db8eeaa7-580x0-1.jpg"
+      ],
+      "bio": "Étudiante en licence LEA (portugais). L'une des benjamines du concours."
     },
     {
       "id": "021",
-      "prenom": "Marie",
-      "nom": "Castel",
-      "region": "Bretagne",
-      "age": null,
-      "ville": "Rennes",
-      "photo": "https://photos.tf1info.fr/images/767/1157/bretagne-miss-france-2025-marie-castel-2d94fe-0@1x.jpeg",
-      "instagram": null,
-      "bio": null,
-      "classement": "Candidate"
+      "prenom": "Pauline",
+      "nom": "Gourlez",
+      "region": "Normandie",
+      "age": 22,
+      "taille": 1.71,
+      "ville": "Giberville",
+      "photo": "https://static1.purepeople.com/uploads/85/85/87/65/0ca4512f816d637a-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/85/85/87/65/0ca4512f816d637a-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/8d/79/62/86/14c346b110c9ae78-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/ef/1f/4d/da/ef3e67575a722983-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/0d/b0/6a/5b/40f4767d8ca52a33-580x0-1.jpg"
+      ],
+      "bio": "Comptable près de Caen, également mannequin."
     },
     {
       "id": "022",
-      "prenom": "Julie",
-      "nom": "Dupont",
-      "region": "Île-de-France",
-      "age": null,
-      "ville": "Paris",
-      "photo": "https://photos.tf1info.fr/images/767/1148/idf-miss-france-2025-julie-dupont-4f541f-0@1x.jpeg",
-      "instagram": null,
-      "bio": null,
-      "classement": "Candidate"
+      "prenom": "Lana",
+      "nom": "Prost",
+      "region": "Nouvelle-Calédonie",
+      "age": 18,
+      "taille": 1.75,
+      "ville": "Le Mont-Dore",
+      "photo": "https://www.lnc.nc/sites/default/files/melody/314492/d5cb4623b46a6a9cb7dcb4v_00138620_4.jpg",
+      "photos": [
+        "https://www.lnc.nc/sites/default/files/melody/314492/d5cb4623b46a6a9cb7dcb4v_00138620_4.jpg",
+        "https://www.lnc.nc/sites/default/files/melody/314492/c9897423b46a69d8951997v_00138619_4.jpg",
+        "https://www.lnc.nc/sites/default/files/melody/314492/55026323b46a639020d026v_00138621_4.jpg"
+      ],
+      "bio": "Lycéenne, prépare son baccalauréat. Élue à 17 ans."
     },
     {
       "id": "023",
-      "prenom": "Jade",
-      "nom": "Fansonna",
-      "region": "Guyane",
-      "age": null,
-      "ville": "Cayenne",
-      "photo": "https://photos.tf1info.fr/images/767/1148/guyane-miss-france-2025-jade-fansonna-2594d8-1@1x.jpeg",
-      "instagram": null,
-      "bio": null,
-      "classement": "Candidate"
+      "prenom": "Maëlle",
+      "nom": "Hamon",
+      "region": "Pays de la Loire",
+      "age": 23,
+      "taille": 1.72,
+      "ville": "Les Sorinières",
+      "photo": "https://static1.purepeople.com/uploads/46/33/75/c0/69242d71fd7283b7-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/46/33/75/c0/69242d71fd7283b7-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/c8/5f/22/27/0a92dd5137b3ad98-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/14/91/f6/52/d5bfd33aa0702f9e-580x0-1.jpg"
+      ],
+      "bio": "Éducatrice scolaire auprès d'élèves en situation de handicap, souhaite devenir professeure des écoles."
     },
     {
       "id": "024",
-      "prenom": "Sasha",
-      "nom": "Bique",
-      "region": "Saint-Martin-Saint-Barthélemy",
-      "age": null,
-      "ville": "Marigot",
-      "photo": "https://photos.tf1info.fr/images/767/1153/st-martin-st-barthe-le-my-miss-france-2025-sasha-bique-a1805d-0@1x.jpeg",
-      "instagram": null,
-      "bio": null,
-      "classement": "Candidate"
+      "prenom": "Marie",
+      "nom": "Villez",
+      "region": "Picardie",
+      "age": 26,
+      "taille": 1.73,
+      "ville": "Amiens",
+      "photo": "https://static1.purepeople.com/uploads/ba/a4/3b/4f/d7a1bdf954a5393b-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/ba/a4/3b/4f/d7a1bdf954a5393b-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/45/71/f7/3b/c31066e8c80310f8-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/47/f5/b6/b1/61820413db172908-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/80/e3/8e/c7/ac29b80fa30172a7-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/3c/a7/95/6b/3e0af077cde0e120-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/35/05/34/4b/f8e5fbfa776bbc6a-580x0-1.jpg"
+      ],
+      "bio": "Chargée de communication en alternance. Miss Somme 2024."
     },
     {
       "id": "025",
-      "prenom": "Jade",
-      "nom": "Benazech",
-      "region": "Languedoc",
-      "age": null,
-      "ville": "Montpellier",
-      "photo": "https://photos.tf1info.fr/images/767/1157/languedoc-miss-france-2025-jade-benazech-fac26a-0@1x.jpeg",
-      "instagram": null,
-      "bio": null,
-      "classement": "Candidate"
+      "prenom": "Mandy",
+      "nom": "Goudal",
+      "region": "Poitou-Charentes",
+      "age": 38,
+      "taille": 1.74,
+      "ville": "Saintes",
+      "photo": "https://static1.purepeople.com/uploads/5e/3b/f2/1c/df9a95ced38b1ec1-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/5e/3b/f2/1c/df9a95ced38b1ec1-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/87/e2/e8/32/0a13568c00bff478-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/2b/e5/4f/fd/3b498381121abcb8-580x0-1.jpg"
+      ],
+      "bio": "Mère de deux enfants, tient une boutique de robes de mariée. Candidate la plus âgée de l'histoire du concours."
     },
     {
       "id": "026",
-      "prenom": "Manon",
-      "nom": "Le Maou",
-      "region": "Franche-Comté",
-      "age": null,
-      "ville": "Besançon",
-      "photo": "https://photos.tf1info.fr/images/767/1140/franche-comte-miss-france-2025-manon-le-maou-cb0908-0@1x.jpeg",
-      "instagram": null,
-      "bio": null,
-      "classement": "Candidate"
+      "prenom": "Ophélie",
+      "nom": "Vitalbo",
+      "region": "Provence",
+      "age": 28,
+      "taille": 1.71,
+      "ville": "Velleron",
+      "photo": "https://static1.purepeople.com/uploads/cd/61/eb/70/3af71df4cbb5c9da-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/cd/61/eb/70/3af71df4cbb5c9da-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/99/45/26/84/888d1418b243b01e-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/1f/be/fe/b4/b988aaab4e1df84a-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/81/3b/b1/6d/3f295d998a3edcec-580x0-1.jpg"
+      ],
+      "bio": "Kinésithérapeute, originaire du Vaucluse."
     },
     {
       "id": "027",
-      "prenom": "Emma",
-      "nom": "Grégoire",
-      "region": "Limousin",
-      "age": null,
-      "ville": "Limoges",
-      "photo": "https://photos.tf1info.fr/images/767/1156/limousin-miss-france-2025-emma-gregoire-752b9b-0@1x.jpeg",
-      "instagram": null,
-      "bio": null,
-      "classement": "Candidate"
+      "prenom": "Laëtitia",
+      "nom": "Roguet",
+      "region": "Réunion",
+      "age": 21,
+      "taille": 1.72,
+      "ville": "Saint-Benoît",
+      "photo": "https://static1.purepeople.com/uploads/df/62/a6/0c/f0432ce4e5bc4195-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/df/62/a6/0c/f0432ce4e5bc4195-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/82/f1/45/c0/abc1e305dc2e00da-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/86/cf/db/d1/61fd3865495714fb-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/8c/79/a3/a5/407697c663245ddc-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/80/b3/f3/c0/aef87d252323618f-580x0-1.jpg"
+      ],
+      "bio": "Étudie pour devenir préparatrice en pharmacie, veut sensibiliser à la santé mentale."
     },
     {
       "id": "028",
-      "prenom": "Tiffanny",
-      "nom": "Haie",
-      "region": "Centre-Val de Loire",
-      "age": null,
-      "ville": "Orléans",
-      "photo": "https://photos.tf1info.fr/images/767/1149/centre-val-de-loire-miss-france-2025-tiffany-haie-76758b-0@1x.jpeg",
-      "instagram": null,
-      "bio": null,
-      "classement": "Candidate"
+      "prenom": "Julia",
+      "nom": "Grid-Costantino",
+      "region": "Rhône-Alpes",
+      "age": 23,
+      "taille": 1.74,
+      "ville": "Lyon",
+      "photo": "https://static1.purepeople.com/uploads/88/21/4d/22/b58b95486b766d2b-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/88/21/4d/22/b58b95486b766d2b-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/42/f2/97/fd/a9a601949409002c-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/c5/12/83/80/b2851019595d4c90-580x0-1.jpg"
+      ],
+      "bio": "Cheffe de projet marketing dans un laboratoire dermocosmétique. 3e dauphine de Miss Rhône-Alpes 2023."
     },
     {
       "id": "029",
-      "prenom": "Mégane",
-      "nom": "Bertaud",
-      "region": "Provence",
-      "age": null,
-      "ville": "Marseille",
-      "photo": "https://photos.tf1info.fr/images/767/1140/provence-miss-france-2025-megane-bertaud-c833b9-0@1x.jpeg",
-      "instagram": null,
-      "bio": null,
-      "classement": "Candidate"
+      "prenom": "Juliette",
+      "nom": "Gauthier",
+      "region": "Roussillon",
+      "age": 23,
+      "taille": 1.74,
+      "ville": "Le Boulou",
+      "photo": "https://static1.purepeople.com/uploads/66/db/3c/7e/4ab170df53887ae5-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/66/db/3c/7e/4ab170df53887ae5-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/bd/3f/da/27/43e7f91325dc7566-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/7d/16/3d/1c/f4b3c5d95a4bd7b5-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/09/51/75/5e/0e4b21c2798852a2-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/c1/0f/50/ac/cfe6dd33ced3bdd1-580x0-1.jpg"
+      ],
+      "instagram": "juliettegauthier___",
+      "bio": "Kinésithérapeute. En fauteuil roulant jusqu'à ses 18 ans avant de réapprendre à marcher."
     },
     {
       "id": "030",
-      "prenom": "Cassiopée",
-      "nom": "Rimbaud",
-      "region": "Roussillon",
-      "age": null,
-      "ville": "Perpignan",
-      "photo": "https://photos.tf1info.fr/images/767/1150/roussillon-miss-france-2025-cassiopee-rimbaud-b9a26d-0@1x.jpeg",
-      "instagram": null,
-      "bio": null,
-      "classement": "Candidate"
+      "prenom": "Naïla",
+      "nom": "Parotte",
+      "region": "Saint-Martin et Saint-Barthélemy",
+      "age": 22,
+      "taille": 1.82,
+      "ville": "Marigot",
+      "photo": "https://static1.purepeople.com/uploads/50/59/a6/1e/1193e5355c440f72-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/50/59/a6/1e/1193e5355c440f72-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/30/97/d2/0b/bf70ba4ff72a3be8-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/02/03/22/be/bcebe20a53324f13-580x0-1.jpg"
+      ],
+      "bio": "Travaille dans le secteur automobile, veut créer une antenne locale de la SPA."
+    },
+    {
+      "id": "031",
+      "prenom": "Leia",
+      "nom": "Diard",
+      "region": "Tahiti",
+      "age": 22,
+      "taille": 1.72,
+      "ville": "Arue",
+      "photo": "https://static1.purepeople.com/uploads/2d/9f/7c/d4/91cc34833c2951dc-580x0-1.jpg",
+      "photos": [
+        "https://static1.purepeople.com/uploads/2d/9f/7c/d4/91cc34833c2951dc-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/53/27/f7/db/aa770f44efb96885-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/0e/09/bf/61/1e03468f0dd26f23-580x0-1.jpg",
+        "https://static1.purepeople.com/uploads/26/c4/04/b9/3cbfbadfe339a72a-580x0-1.jpg"
+      ],
+      "instagram": "leiadiard_off",
+      "bio": "Licence AES, enseigne la danse traditionnelle polynésienne."
     }
   ]
 }

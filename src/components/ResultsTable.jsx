@@ -61,6 +61,7 @@ export default function ResultsTable({ rows, onOpenPhoto, onEdit }) {
               {row.candidate.photo ? (
                 <img
                   src={row.candidate.photo}
+                  referrerPolicy="no-referrer"
                   alt=""
                   className="w-full h-full object-cover"
                   onError={(e) => (e.currentTarget.style.display = 'none')}

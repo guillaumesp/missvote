@@ -10,7 +10,8 @@ export function exportToExcel(candidates, votes, editionLabel = 'Miss France') {
       Prénom: c.prenom,
       Nom: c.nom,
       Région: c.region,
-      Âge: c.age,
+      Âge: c.age ?? '',
+      Taille: c.taille ? `${String(c.taille).replace('.', ',')} m` : '',
       Ville: c.ville,
       Instagram: c.instagram ? `@${c.instagram}` : '',
       Note: m ? m.label : '—'
@@ -26,6 +27,7 @@ export function exportToExcel(candidates, votes, editionLabel = 'Miss France') {
     { wch: 18 },
     { wch: 22 },
     { wch: 5 },
+    { wch: 8 },
     { wch: 18 },
     { wch: 20 },
     { wch: 12 }

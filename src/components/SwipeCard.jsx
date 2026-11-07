@@ -1,6 +1,8 @@
 import { motion, useMotionValue, useTransform, useAnimationControls } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { NOTES } from '../utils/notes'
+import { photosOf } from '../utils/photos'
+import PhotoViewer from './PhotoViewer'
 
 const SWIPE_THRESHOLD = 110
 
@@ -17,7 +19,12 @@ export default function SwipeCard({ candidate, onSwipe, isTop, stackIndex = 0 })
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const controls = useAnimationControls()
+  const cardRef = useRef(null)
   const [imgError, setImgError] = useState(false)
+  const [photoIndex, setPhotoIndex] = useState(0)
+  const [viewerOpen, setViewerOpen] = useState(false)
+  const photos = photosOf(candidate)
+  const currentPhoto = photos[photoIndex] ?? photos[0]
 
   const rotate = useTransform(x, [-300, 0, 300], [-18, 0, 18])
 
@@ -37,7 +44,27 @@ export default function SwipeCard({ candidate, onSwipe, isTop, stackIndex = 0 })
 
   useEffect(() => {
     setImgError(false)
+    setPhotoIndex(0)
   }, [candidate?.id])
+
+  useEffect(() => {
+    setImgError(false)
+  }, [photoIndex])
+
+  // Tap (sans drag) : bord gauche/droit = photo précédente/suivante, centre = zoom
+  const handleTap = (event, info) => {
+    if (!isTop) return
+    const rect = cardRef.current?.getBoundingClientRect()
+    if (!rect) return
+    const rel = (info.point.x - window.scrollX - rect.left) / rect.width
+    if (photos.length > 1 && rel < 0.3) {
+      setPhotoIndex((i) => (i - 1 + photos.length) % photos.length)
+    } else if (photos.length > 1 && rel > 0.7) {
+      setPhotoIndex((i) => (i + 1) % photos.length)
+    } else if (photos.length) {
+      setViewerOpen(true)
+    }
+  }
 
   const flyOff = async (note) => {
     const target = {
@@ -84,6 +111,7 @@ export default function SwipeCard({ candidate, onSwipe, isTop, stackIndex = 0 })
 
   return (
     <motion.div
+      ref={cardRef}
       className="absolute inset-0 select-none"
       style={{
         x: isTop ? x : 0,
@@ -97,17 +125,20 @@ export default function SwipeCard({ candidate, onSwipe, isTop, stackIndex = 0 })
       dragElastic={0.7}
       dragMomentum={false}
       onDragEnd={isTop ? handleDragEnd : undefined}
+      onTap={isTop ? handleTap : undefined}
       animate={controls}
       initial={false}
     >
       <div className="relative w-full h-full rounded-3xl overflow-hidden bg-[var(--color-surface)] border border-[var(--color-border)] shadow-gold">
         {/* Photo */}
         <div className="absolute inset-0">
-          {imgError || !candidate.photo ? (
+          {imgError || !currentPhoto ? (
             <PlaceholderSilhouette />
           ) : (
             <img
-              src={candidate.photo}
+              key={currentPhoto}
+              src={currentPhoto}
+              referrerPolicy="no-referrer"
               alt={`${candidate.prenom} ${candidate.nom}`}
               className="w-full h-full object-cover"
               draggable={false}
@@ -124,6 +155,32 @@ export default function SwipeCard({ candidate, onSwipe, isTop, stackIndex = 0 })
           />
         </div>
 
+        {/* Indicateur de photos + bouton zoom */}
+        {photos.length > 1 && (
+          <div className="absolute top-2 inset-x-3 flex gap-1 pointer-events-none">
+            {photos.map((src, i) => (
+              <div
+                key={src}
+                className={`h-1 flex-1 rounded-full ${i === photoIndex ? 'bg-white' : 'bg-white/35'}`}
+              />
+            ))}
+          </div>
+        )}
+        {isTop && photos.length > 0 && (
+          <button
+            type="button"
+            aria-label="Agrandir la photo"
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation()
+              setViewerOpen(true)
+            }}
+            className="absolute top-5 right-3 w-9 h-9 rounded-full bg-black/40 backdrop-blur flex items-center justify-center text-white hover:bg-black/60"
+          >
+            <ZoomIcon />
+          </button>
+        )}
+
         {/* Info overlay */}
         <div className="absolute inset-x-0 bottom-0 p-5 text-white">
           <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-[11px] uppercase tracking-wider mb-2 border border-[var(--color-gold-light)]/40 bg-black/40 backdrop-blur text-[var(--color-gold-light)]">
@@ -133,7 +190,9 @@ export default function SwipeCard({ candidate, onSwipe, isTop, stackIndex = 0 })
             {candidate.prenom} <span className="text-[var(--color-gold-light)]">{candidate.nom}</span>
           </h2>
           <div className="mt-1 text-sm text-white/80">
-            {candidate.age} ans · {candidate.ville}
+            {[candidate.age && `${candidate.age} ans`, candidate.taille && `${String(candidate.taille).replace('.', ',')} m`, candidate.ville]
+              .filter(Boolean)
+              .join(' · ')}
           </div>
           {candidate.bio && (
             <p className="mt-2 text-xs text-white/70 line-clamp-2">{candidate.bio}</p>
@@ -186,7 +245,25 @@ export default function SwipeCard({ candidate, onSwipe, isTop, stackIndex = 0 })
           </>
         )}
       </div>
+      {isTop && (
+        <PhotoViewer
+          open={viewerOpen}
+          photos={photos}
+          startIndex={photoIndex}
+          title={`${candidate.prenom} ${candidate.nom}`}
+          onClose={() => setViewerOpen(false)}
+        />
+      )}
     </motion.div>
+  )
+}
+
+function ZoomIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M21 21l-4.5-4.5M11 8v6M8 11h6" />
+    </svg>
   )
 }
 

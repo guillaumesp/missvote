@@ -64,7 +64,7 @@ src/
 
 ## Stockage
 
-Les votes sont stockés dans `localStorage` sous la clé `missVote_votes` :
+Les votes sont stockés dans `localStorage` sous la clé `missVote_votes_<annee>` (ex. `missVote_votes_2027`) :
 
 ```json
 { "001": "super_like", "002": "like", "003": "moyen", "004": "moche" }
@@ -87,7 +87,9 @@ Remplace le contenu de `src/assets/candidates.json` en respectant le schéma :
       "region": "...",
       "age": 30,
       "ville": "...",
+      "taille": 1.75,
       "photo": "https://...",
+      "photos": ["https://...", "https://..."],
       "instagram": "handle_sans_arobase",
       "bio": "..."
     }
@@ -95,7 +97,15 @@ Remplace le contenu de `src/assets/candidates.json` en respectant le schéma :
 }
 ```
 
-Champs obligatoires : `id`, `prenom`, `nom`, `region`, `age`, `ville`, `photo`. Optionnels : `instagram`, `bio`.
+Champs obligatoires : `id`, `prenom`, `nom`, `region`, `photo`. Optionnels : `age`, `taille`, `ville`, `photos` (galerie : la première sert de couverture, `photo` reste le repli), `instagram`, `bio`.
+
+Les votes sont stockés par édition (`missVote_votes_<annee>`) : changer d'édition repart d'une grille vierge sans effacer l'ancienne.
+
+## Photos
+
+- **Carte de swipe** : taper sur le bord gauche/droit change de photo, taper au centre (ou la loupe) ouvre la visionneuse.
+- **Fiche candidate** (écran Résultats) : carrousel à faire défiler, tap pour agrandir.
+- **Visionneuse** : pinch, molette, double-tap ou boutons +/− pour zoomer (jusqu'à ×5), glisser pour se déplacer dans la photo zoomée, swipe ou flèches ←/→ pour changer de photo, Échap pour fermer.
 
 ## Déploiement
 

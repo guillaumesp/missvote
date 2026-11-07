@@ -1,5 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { photosOf } from '../utils/photos'
+import PhotoViewer from './PhotoViewer'
 
 export default function CandidateModal({ candidate, onClose }) {
   return (
@@ -28,7 +30,7 @@ export default function CandidateModal({ candidate, onClose }) {
             >
               ✕
             </button>
-            <PhotoOrPlaceholder candidate={candidate} />
+            <Gallery key={candidate.id} candidate={candidate} />
             <div className="p-5">
               <div className="text-[10px] uppercase tracking-wider text-[var(--color-gold-light)] mb-1">
                 {candidate.region}
@@ -37,7 +39,9 @@ export default function CandidateModal({ candidate, onClose }) {
                 {candidate.prenom} {candidate.nom}
               </h3>
               <div className="mt-1 text-sm text-[var(--color-text-muted)]">
-                {candidate.age} ans · {candidate.ville}
+                {[candidate.age && `${candidate.age} ans`, candidate.taille && `${String(candidate.taille).replace('.', ',')} m`, candidate.ville]
+                  .filter(Boolean)
+                  .join(' · ')}
               </div>
               {candidate.bio && (
                 <p className="mt-3 text-sm text-[var(--color-text)]/80">{candidate.bio}</p>
@@ -60,9 +64,29 @@ export default function CandidateModal({ candidate, onClose }) {
   )
 }
 
-function PhotoOrPlaceholder({ candidate }) {
-  const [err, setErr] = useState(false)
-  if (err || !candidate.photo) {
+function Gallery({ candidate }) {
+  const photos = photosOf(candidate)
+  const [index, setIndex] = useState(0)
+  const [viewerOpen, setViewerOpen] = useState(false)
+  const [broken, setBroken] = useState({})
+  const trackRef = useRef(null)
+
+  // Suit la photo visible pendant le défilement (scroll-snap)
+  useEffect(() => {
+    const el = trackRef.current
+    if (!el) return
+    const onScroll = () => setIndex(Math.round(el.scrollLeft / el.clientWidth))
+    el.addEventListener('scroll', onScroll, { passive: true })
+    return () => el.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const goTo = (i) => {
+    const el = trackRef.current
+    if (el) el.scrollTo({ left: i * el.clientWidth, behavior: 'smooth' })
+  }
+
+  const visible = photos.filter((src) => !broken[src])
+  if (!visible.length) {
     return (
       <div className="w-full aspect-[4/5] bg-gradient-to-b from-[var(--color-surface-2)] to-[var(--color-border)] flex items-center justify-center text-[var(--color-gold)] text-6xl font-display">
         {candidate.prenom?.[0]}
@@ -70,12 +94,64 @@ function PhotoOrPlaceholder({ candidate }) {
       </div>
     )
   }
+
   return (
-    <img
-      src={candidate.photo}
-      alt={`${candidate.prenom} ${candidate.nom}`}
-      className="w-full aspect-[4/5] object-cover"
-      onError={() => setErr(true)}
-    />
+    <div className="relative">
+      <div
+        ref={trackRef}
+        className="flex w-full aspect-[4/5] overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {visible.map((src, i) => (
+          <button
+            key={src}
+            type="button"
+            aria-label={`Agrandir la photo ${i + 1}`}
+            onClick={() => {
+              setIndex(i)
+              setViewerOpen(true)
+            }}
+            className="w-full h-full shrink-0 snap-center cursor-zoom-in"
+          >
+            <img
+              src={src}
+              alt={`${candidate.prenom} ${candidate.nom} — photo ${i + 1}`}
+              referrerPolicy="no-referrer"
+              loading={i === 0 ? 'eager' : 'lazy'}
+              className="w-full h-full object-cover"
+              onError={() => setBroken((b) => ({ ...b, [src]: true }))}
+            />
+          </button>
+        ))}
+      </div>
+
+      {visible.length > 1 && (
+        <>
+          <div className="absolute bottom-3 inset-x-0 flex justify-center gap-1.5">
+            {visible.map((src, i) => (
+              <button
+                key={src}
+                type="button"
+                aria-label={`Photo ${i + 1}`}
+                onClick={() => goTo(i)}
+                className={`h-1.5 rounded-full transition-all ${
+                  i === index ? 'w-5 bg-white' : 'w-1.5 bg-white/50'
+                }`}
+              />
+            ))}
+          </div>
+          <div className="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-black/50 text-white text-xs tabular-nums">
+            {index + 1} / {visible.length}
+          </div>
+        </>
+      )}
+
+      <PhotoViewer
+        open={viewerOpen}
+        photos={visible}
+        startIndex={index}
+        title={`${candidate.prenom} ${candidate.nom}`}
+        onClose={() => setViewerOpen(false)}
+      />
+    </div>
   )
 }
