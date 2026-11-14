@@ -32,19 +32,21 @@ export default function SwipeScreen() {
   }
 
   return (
-    <div className="flex flex-col h-full pb-[68px]">
-      <header className="px-5 pt-5 pb-1">
-        <div className="text-[10px] uppercase tracking-[0.3em] text-[var(--color-gold-light)]">
+    <div
+      className="flex flex-col h-[100dvh] overflow-hidden"
+      style={{ paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' }}
+    >
+      <header className="px-5 pt-[max(0.5rem,env(safe-area-inset-top))]">
+        <div className="text-[10px] uppercase tracking-[0.3em] text-[var(--color-gold-light)] leading-none">
           {data.edition}
         </div>
-        <h1 className="font-display text-2xl mt-0.5">MissVote</h1>
       </header>
 
       <ProgressBar done={done} total={data.candidates.length} />
 
-      <div className="flex-1 relative px-5 mt-4">
+      <div className="flex-1 min-h-0 relative px-5 mt-3">
         {top ? (
-          <div className="relative w-full h-full max-w-[400px] mx-auto" style={{ aspectRatio: '3/4.2' }}>
+          <div className="relative w-full h-full max-w-[400px] mx-auto">
             <AnimatePresence>
               {next && (
                 <SwipeCard
