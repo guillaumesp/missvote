@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 
-export default function BottomNav({ remaining, voted }) {
+export default function BottomNav({ remaining, voted, online }) {
   return (
     <nav
       className="fixed bottom-0 inset-x-0 z-40 border-t border-[var(--color-border)]"
@@ -11,9 +11,10 @@ export default function BottomNav({ remaining, voted }) {
         paddingBottom: 'env(safe-area-inset-bottom)'
       }}
     >
-      <div className="max-w-[430px] mx-auto grid grid-cols-2">
+      <div className="max-w-[430px] mx-auto grid grid-cols-3">
         <Tab to="/" label="Swipe" icon="🃏" badge={remaining} />
         <Tab to="/results" label="Résultats" icon="📊" badge={voted} />
+        <Tab to="/groupe" label="Groupe" icon="👥" badge={online} />
       </div>
     </nav>
   )
@@ -36,7 +37,7 @@ function Tab({ to, label, icon, badge }) {
           <span className="uppercase tracking-wider text-[10px]">{label}</span>
           {badge > 0 && (
             <span
-              className="absolute top-1 right-[35%] min-w-[18px] h-[18px] px-1 rounded-full text-[10px] flex items-center justify-center font-semibold"
+              className="absolute top-1 right-[28%] min-w-[18px] h-[18px] px-1 rounded-full text-[10px] flex items-center justify-center font-semibold"
               style={{
                 background: isActive ? 'var(--color-gold)' : 'var(--color-surface-2)',
                 color: isActive ? 'var(--color-text)' : 'var(--color-text)',

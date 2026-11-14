@@ -104,7 +104,7 @@ function PencilIcon() {
   )
 }
 
-function NoteBadge({ note }) {
+export function NoteBadge({ note }) {
   if (!note) {
     return (
       <span className="text-xs text-[var(--color-text-muted)]/60 italic">—</span>
