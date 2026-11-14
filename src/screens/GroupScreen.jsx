@@ -5,11 +5,9 @@ import { NoteBadge } from '../components/ResultsTable'
 import { useVotes } from '../hooks/useVotes'
 import { NOTES, NOTE_ORDER } from '../utils/notes'
 import {
-  DEFAULT_ROOM,
   PSEUDO_MAX,
   joinGroup,
   leaveGroup,
-  normalizeRoom,
   selfId,
   useGroup
 } from '../p2p/group'
@@ -28,8 +26,8 @@ export default function GroupScreen() {
       <JoinForm
         initial={group.profile}
         onCancel={group.profile ? () => setEditing(false) : null}
-        onJoin={(pseudo, room) => {
-          joinGroup(pseudo, room)
+        onJoin={(pseudo) => {
+          joinGroup(pseudo)
           setEditing(false)
         }}
       />
@@ -52,7 +50,6 @@ function Header({ children }) {
 
 function JoinForm({ initial, onJoin, onCancel }) {
   const [pseudo, setPseudo] = useState(initial?.pseudo || '')
-  const [room, setRoom] = useState(initial && initial.room !== DEFAULT_ROOM ? initial.room : '')
   const valid = pseudo.trim().length > 0
 
   return (
@@ -62,7 +59,7 @@ function JoinForm({ initial, onJoin, onCancel }) {
         className="px-5 mt-4 flex flex-col gap-4"
         onSubmit={(e) => {
           e.preventDefault()
-          if (valid) onJoin(pseudo, room)
+          if (valid) onJoin(pseudo)
         }}
       >
         <p className="text-sm text-[var(--color-text-muted)]">
@@ -80,29 +77,6 @@ function JoinForm({ initial, onJoin, onCancel }) {
             placeholder="Ex. Julie"
             className="px-3 py-2.5 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] text-sm outline-none focus:border-[var(--color-gold)] placeholder:text-[var(--color-text-muted)]"
           />
-        </label>
-
-        <label className="flex flex-col gap-1.5">
-          <span className="text-[11px] uppercase tracking-wider text-[var(--color-text-muted)]">
-            Code du salon <span className="normal-case tracking-normal">(facultatif)</span>
-          </span>
-          <input
-            value={room}
-            onChange={(e) => setRoom(e.target.value)}
-            maxLength={32}
-            autoCapitalize="none"
-            autoCorrect="off"
-            spellCheck={false}
-            placeholder={DEFAULT_ROOM}
-            className="px-3 py-2.5 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] text-sm outline-none focus:border-[var(--color-gold)] placeholder:text-[var(--color-text-muted)]"
-          />
-          <span className="text-xs text-[var(--color-text-muted)]">
-            Sans code, tu rejoins le salon public. Avec un code (ex. <em>famille-dupont</em>), seules les
-            personnes qui ont le même code te verront.
-            {room && normalizeRoom(room) !== room.trim() && (
-              <> Code utilisé : <strong>{normalizeRoom(room)}</strong></>
-            )}
-          </span>
         </label>
 
         <div className="flex gap-2">
@@ -154,7 +128,7 @@ function GroupView({ group, myVotes, onEdit }) {
       <div className="px-5 mt-3 flex items-center gap-2 text-xs">
         <StatusPill status={group.status} count={members.length} />
         <span className="text-[var(--color-text-muted)] truncate">
-          Salon <strong className="text-[var(--color-text)]">{group.profile.room}</strong>
+          En tant que <strong className="text-[var(--color-text)]">{group.profile.pseudo}</strong>
         </span>
         <div className="ml-auto flex gap-1.5 shrink-0">
           <button
@@ -191,7 +165,7 @@ function GroupView({ group, myVotes, onEdit }) {
       {members.length === 1 && (
         <p className="mx-5 mt-4 p-3 rounded-xl bg-[var(--color-surface-2)] text-xs text-[var(--color-text-muted)]">
           {group.status === 'searching'
-            ? 'Recherche des autres participants… Ils apparaîtront ici dès qu’ils ouvriront l’onglet Groupe avec le même code de salon.'
+            ? 'Recherche des autres participants… Ils apparaîtront ici dès qu’ils ouvriront l’onglet Groupe.'
             : 'Personne d’autre n’est connecté pour l’instant.'}
         </p>
       )}

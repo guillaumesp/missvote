@@ -24,7 +24,8 @@ const PROFILE_KEY = 'missVote_profile'
 const HEARTBEAT_MS = 10_000
 const PEER_TIMEOUT_MS = 35_000
 const RECONNECT_CHECK_MS = 20_000
-export const DEFAULT_ROOM = 'public'
+// Un seul salon pour toute l'app : tous les utilisateurs connectés se voient
+const ROOM_ID = 'salon-principal'
 export const PSEUDO_MAX = 24
 
 const candidateIds = new Set(data.candidates.map((c) => c.id))
@@ -33,7 +34,7 @@ function readProfile() {
   try {
     const p = JSON.parse(localStorage.getItem(PROFILE_KEY) || 'null')
     if (p && typeof p.pseudo === 'string' && p.pseudo.trim()) {
-      return { pseudo: p.pseudo.trim().slice(0, PSEUDO_MAX), room: normalizeRoom(p.room) }
+      return { pseudo: p.pseudo.trim().slice(0, PSEUDO_MAX) }
     }
   } catch {
     // stockage indisponible ou corrompu
@@ -48,15 +49,6 @@ function writeProfile(profile) {
   } catch {
     // stockage indisponible : le profil reste en mémoire pour cette session
   }
-}
-
-export function normalizeRoom(room) {
-  const r = String(room || '')
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9-]/g, '')
-    .slice(0, 32)
-  return r || DEFAULT_ROOM
 }
 
 // Ne garde que des données valides venant d'un pair (personne n'est de confiance)
@@ -136,7 +128,7 @@ function connect() {
 
   room = joinRoom(
     { appId: APP_ID, relayConfig: { warnOnRelayFailure: false } },
-    `room-${profile.room}`
+    ROOM_ID
   )
   const action = room.makeAction('profile')
   sendProfile = (payload, opts) => action.send(payload, opts)
@@ -207,17 +199,14 @@ function reconnect() {
   connect()
 }
 
-export function joinGroup(pseudo, roomCode) {
-  const profile = {
-    pseudo: String(pseudo).trim().slice(0, PSEUDO_MAX),
-    room: normalizeRoom(roomCode)
-  }
+export function joinGroup(pseudo) {
+  const profile = { pseudo: String(pseudo).trim().slice(0, PSEUDO_MAX) }
   if (!profile.pseudo) return
-  const sameRoom = state.profile?.room === profile.room && room
   writeProfile(profile)
   setState({ profile })
-  if (sameRoom) broadcast()
-  else reconnect()
+  // Déjà connecté : un simple changement de pseudo est diffusé aux autres
+  if (room) broadcast()
+  else connect()
 }
 
 export function leaveGroup() {

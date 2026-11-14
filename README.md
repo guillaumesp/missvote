@@ -77,12 +77,12 @@ Pour repartir de zéro : bouton **Réinitialiser** dans l'écran Résultats, ou 
 
 ## Onglet Groupe (pair-à-pair)
 
-Chaque personne choisit un pseudo et, si elle veut, un code de salon (sinon salon `public`). Les appareils d'un même salon se connectent directement entre eux en WebRTC et s'échangent leurs votes : l'onglet affiche le classement de chaque personne connectée et un classement commun (moyenne : Super Like 3 pts, Like 2, Moyen 1, Moche 0, ramenée sur 10).
+Chaque personne choisit un pseudo. Il n'y a qu'un seul salon : tous les appareils connectés se connectent directement entre eux en WebRTC et s'échangent leurs votes : l'onglet affiche le classement de chaque personne connectée et un classement commun (moyenne : Super Like 3 pts, Like 2, Moyen 1, Moche 0, ramenée sur 10).
 
 - **Pas de serveur applicatif, pas d'hôte** : maillage complet, chaque pair garde l'état de tous les autres. Si quelqu'un part, les autres continuent sans rien avoir à élire.
 - **Mise en relation** : via des relais Nostr publics (Trystero), uniquement pour échanger les offres WebRTC chiffrées. Les votes passent ensuite directement d'appareil à appareil.
-- **Résilience** : profil renvoyé à chaque nouveau venu et toutes les 10 s ; pair retiré après 35 s sans nouvelles ; reconnexion automatique au retour du réseau, au retour sur l'onglet et au rechargement (pseudo et salon gardés dans `localStorage`, clé `missVote_profile`).
-- **Limites** : rien n'est conservé quand tout le monde est parti ; certains réseaux d'entreprise bloquent WebRTC sans serveur TURN ; prévu pour quelques dizaines de personnes par salon.
+- **Résilience** : profil renvoyé à chaque nouveau venu et toutes les 10 s ; pair retiré après 35 s sans nouvelles ; reconnexion automatique au retour du réseau, au retour sur l'onglet et au rechargement (pseudo gardé dans `localStorage`, clé `missVote_profile`).
+- **Limites** : rien n'est conservé quand tout le monde est parti ; certains réseaux d'entreprise bloquent WebRTC sans serveur TURN ; prévu pour quelques dizaines de personnes connectées en même temps.
 
 ## Changer l'édition / les candidates
 
