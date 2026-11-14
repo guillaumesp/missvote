@@ -61,7 +61,7 @@ export default function ResultsScreen() {
         />
       </div>
 
-      <div className="px-5 mt-3 overflow-x-auto no-scrollbar -mx-1">
+      <div className="px-4 mt-3 overflow-x-auto no-scrollbar">
         <div className="flex gap-2 px-1">
           <Chip active={filter === 'all'} onClick={() => setFilter('all')} label="Toutes" />
           {NOTE_ORDER.map((key) => {

@@ -1,17 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
+import useEmblaCarousel from 'embla-carousel-react'
 
 const MAX_SCALE = 5
 const DOUBLE_TAP_SCALE = 2.5
-const SWIPE_DISTANCE = 60
 
 const clamp = (v, min, max) => Math.min(max, Math.max(min, v))
 
 /**
- * Visionneuse plein écran : pinch / molette / double-tap pour zoomer,
- * glisser pour se déplacer dans la photo zoomée, swipe horizontal
- * (à l'échelle 1) ou flèches pour changer de photo.
+ * Visionneuse plein écran : carrousel Embla pour changer de photo
+ * (glisser, flèches, miniatures), pinch / molette / double-tap / boutons
+ * pour zoomer, glisser pour se déplacer dans la photo zoomée.
+ * Tant qu'une photo est zoomée, le carrousel est figé.
  */
 export default function PhotoViewer({ photos, startIndex = 0, open, onClose, title }) {
   return createPortal(
@@ -25,7 +26,8 @@ export default function PhotoViewer({ photos, startIndex = 0, open, onClose, tit
 }
 
 function Viewer({ photos, startIndex, onClose, title }) {
-  const [index, setIndex] = useState(clamp(startIndex, 0, photos.length - 1))
+  const count = photos.length
+  const [index, setIndex] = useState(clamp(startIndex, 0, count - 1))
   const [view, setViewState] = useState({ s: 1, x: 0, y: 0 })
   // Copie synchrone de `view` : les gestes enchaînent plusieurs évènements
   // avant le rendu suivant et doivent toujours partir de la dernière valeur.
@@ -41,20 +43,45 @@ function Viewer({ photos, startIndex, onClose, title }) {
   const gesture = useRef(null)
   const lastTap = useRef({ t: 0, x: 0, y: 0 })
 
-  const count = photos.length
+  // Le carrousel ne glisse que si la photo n'est pas zoomée et qu'un seul doigt est posé
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: count > 1,
+    startIndex: clamp(startIndex, 0, count - 1),
+    watchDrag: () => count > 1 && viewRef.current.s <= 1 && pointers.current.size < 2
+  })
+
+  const setRefs = useCallback(
+    (node) => {
+      stageRef.current = node
+      emblaRef(node)
+    },
+    [emblaRef]
+  )
 
   const reset = useCallback(() => {
     setAnimating(true)
     setView({ s: 1, x: 0, y: 0 })
-  }, [])
+  }, [setView])
+
+  useEffect(() => {
+    if (!emblaApi) return
+    const onSelect = () => {
+      setIndex(emblaApi.selectedScrollSnap())
+      reset()
+    }
+    emblaApi.on('select', onSelect)
+    return () => {
+      emblaApi.off('select', onSelect)
+    }
+  }, [emblaApi, reset])
 
   const go = useCallback(
     (delta) => {
-      if (count < 2) return
-      setIndex((i) => (i + delta + count) % count)
-      reset()
+      if (count < 2 || !emblaApi) return
+      if (delta > 0) emblaApi.scrollNext()
+      else emblaApi.scrollPrev()
     },
-    [count, reset]
+    [count, emblaApi]
   )
 
   useEffect(() => {
@@ -135,8 +162,8 @@ function Viewer({ photos, startIndex, onClose, title }) {
       const dx = e.clientX - g.start.x
       const dy = e.clientY - g.start.y
       if (Math.abs(dx) > 4 || Math.abs(dy) > 4) g.moved = true
+      // À l'échelle 1, c'est Embla qui gère le glissement entre les photos
       if (g.view.s > 1) setView(bound({ s: g.view.s, x: g.view.x + dx, y: g.view.y + dy }))
-      else setView({ s: 1, x: dx, y: 0 }) // aperçu du swipe
     }
   }
 
@@ -145,15 +172,7 @@ function Viewer({ photos, startIndex, onClose, title }) {
     pointers.current.delete(e.pointerId)
     setAnimating(true)
 
-    if (g?.type === 'pan' && pointers.current.size === 0) {
-      const dx = e.clientX - g.start.x
-      if (g.view.s <= 1) {
-        if (dx <= -SWIPE_DISTANCE) return go(1)
-        if (dx >= SWIPE_DISTANCE) return go(-1)
-        setView({ s: 1, x: 0, y: 0 })
-      }
-      if (!g.moved) handleTap(e)
-    }
+    if (g?.type === 'pan' && pointers.current.size === 0 && !g.moved) handleTap(e)
     if (pointers.current.size > 0) startGesture()
     else gesture.current = null
   }
@@ -215,8 +234,8 @@ function Viewer({ photos, startIndex, onClose, title }) {
       </div>
 
       <div
-        ref={stageRef}
-        className="relative flex-1 overflow-hidden"
+        ref={setRefs}
+        className="relative flex-1 min-h-0 overflow-hidden"
         style={{ touchAction: 'none', cursor: view.s > 1 ? 'grab' : 'zoom-in' }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
@@ -224,18 +243,28 @@ function Viewer({ photos, startIndex, onClose, title }) {
         onPointerCancel={onPointerUp}
         onWheel={onWheel}
       >
-        <img
-          key={photos[index]}
-          src={photos[index]}
-          alt={title ? `${title} — photo ${index + 1}` : ''}
-          referrerPolicy="no-referrer"
-          draggable={false}
-          className="absolute inset-0 w-full h-full object-contain select-none"
-          style={{
-            transform: `translate3d(${view.x}px, ${view.y}px, 0) scale(${view.s})`,
-            transition: animating ? 'transform 200ms ease-out' : 'none'
-          }}
-        />
+        <div className="flex h-full">
+          {photos.map((src, i) => {
+            const active = i === index
+            return (
+              <div key={src} className="relative flex-[0_0_100%] min-w-0 h-full overflow-hidden">
+                <img
+                  src={src}
+                  alt={title ? `${title} — photo ${i + 1}` : ''}
+                  referrerPolicy="no-referrer"
+                  draggable={false}
+                  className="absolute inset-0 w-full h-full object-contain select-none"
+                  style={{
+                    transform: active
+                      ? `translate3d(${view.x}px, ${view.y}px, 0) scale(${view.s})`
+                      : 'none',
+                    transition: active && animating ? 'transform 200ms ease-out' : 'none'
+                  }}
+                />
+              </div>
+            )
+          })}
+        </div>
 
         {count > 1 && view.s <= 1 && (
           <>
@@ -252,10 +281,7 @@ function Viewer({ photos, startIndex, onClose, title }) {
               key={src}
               type="button"
               aria-label={`Photo ${i + 1}`}
-              onClick={() => {
-                setIndex(i)
-                reset()
-              }}
+              onClick={() => emblaApi?.scrollTo(i)}
               className={`w-12 h-12 shrink-0 rounded-lg overflow-hidden border-2 transition ${
                 i === index ? 'border-[var(--color-gold-light)]' : 'border-transparent opacity-50'
               }`}

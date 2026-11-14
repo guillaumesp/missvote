@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
+import useEmblaCarousel from 'embla-carousel-react'
 import { photosOf } from '../utils/photos'
 import PhotoViewer from './PhotoViewer'
 
@@ -15,7 +16,7 @@ export default function CandidateModal({ candidate, onClose }) {
           onClick={onClose}
         >
           <motion.div
-            className="relative w-full max-w-[430px] bg-[var(--color-surface)] border border-[var(--color-border)] rounded-t-3xl sm:rounded-3xl overflow-hidden"
+            className="relative w-full max-w-[430px] max-h-[100dvh] overflow-y-auto no-scrollbar bg-[var(--color-surface)] border border-[var(--color-border)] rounded-t-3xl sm:rounded-3xl"
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 50, opacity: 0 }}
@@ -26,7 +27,7 @@ export default function CandidateModal({ candidate, onClose }) {
               type="button"
               onClick={onClose}
               aria-label="Fermer"
-              className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-black/50 backdrop-blur flex items-center justify-center text-[var(--color-text)] hover:bg-black/70"
+              className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-black/50 backdrop-blur flex items-center justify-center text-white hover:bg-black/70"
             >
               ✕
             </button>
@@ -69,26 +70,25 @@ function Gallery({ candidate }) {
   const [index, setIndex] = useState(0)
   const [viewerOpen, setViewerOpen] = useState(false)
   const [broken, setBroken] = useState({})
-  const trackRef = useRef(null)
-
-  // Suit la photo visible pendant le défilement (scroll-snap)
-  useEffect(() => {
-    const el = trackRef.current
-    if (!el) return
-    const onScroll = () => setIndex(Math.round(el.scrollLeft / el.clientWidth))
-    el.addEventListener('scroll', onScroll, { passive: true })
-    return () => el.removeEventListener('scroll', onScroll)
-  }, [])
-
-  const goTo = (i) => {
-    const el = trackRef.current
-    if (el) el.scrollTo({ left: i * el.clientWidth, behavior: 'smooth' })
-  }
-
   const visible = photos.filter((src) => !broken[src])
+  const multi = visible.length > 1
+
+  // Carrousel Embla : glisser pour changer de photo, toucher pour l'agrandir
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: multi, watchDrag: multi })
+
+  useEffect(() => {
+    if (!emblaApi) return
+    const onSelect = () => setIndex(emblaApi.selectedScrollSnap())
+    onSelect()
+    emblaApi.on('select', onSelect).on('reInit', onSelect)
+    return () => {
+      emblaApi.off('select', onSelect).off('reInit', onSelect)
+    }
+  }, [emblaApi])
+
   if (!visible.length) {
     return (
-      <div className="w-full aspect-[4/5] bg-gradient-to-b from-[var(--color-surface-2)] to-[var(--color-border)] flex items-center justify-center text-[var(--color-gold)] text-6xl font-display">
+      <div className="w-full aspect-[4/5] max-h-[60dvh] bg-gradient-to-b from-[var(--color-surface-2)] to-[var(--color-border)] flex items-center justify-center text-[var(--color-gold)] text-6xl font-display">
         {candidate.prenom?.[0]}
         {candidate.nom?.[0]}
       </div>
@@ -97,43 +97,53 @@ function Gallery({ candidate }) {
 
   return (
     <div className="relative">
-      <div
-        ref={trackRef}
-        className="flex w-full aspect-[4/5] overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-      >
-        {visible.map((src, i) => (
-          <button
-            key={src}
-            type="button"
-            aria-label={`Agrandir la photo ${i + 1}`}
-            onClick={() => {
-              setIndex(i)
-              setViewerOpen(true)
-            }}
-            className="w-full h-full shrink-0 snap-center cursor-zoom-in"
-          >
-            <img
-              src={src}
-              alt={`${candidate.prenom} ${candidate.nom} — photo ${i + 1}`}
-              referrerPolicy="no-referrer"
-              loading={i === 0 ? 'eager' : 'lazy'}
-              className="w-full h-full object-cover"
-              onError={() => setBroken((b) => ({ ...b, [src]: true }))}
-            />
-          </button>
-        ))}
+      <div ref={emblaRef} className="w-full aspect-[4/5] max-h-[60dvh] overflow-hidden">
+        <div className="flex h-full touch-pan-y">
+          {visible.map((src, i) => (
+            <button
+              key={src}
+              type="button"
+              aria-label={`Agrandir la photo ${i + 1}`}
+              // Embla bloque ce clic après un glissement : seul un vrai toucher ouvre le zoom
+              onClick={() => {
+                setIndex(i)
+                setViewerOpen(true)
+              }}
+              className="flex-[0_0_100%] min-w-0 h-full cursor-zoom-in"
+            >
+              <img
+                src={src}
+                alt={`${candidate.prenom} ${candidate.nom} — photo ${i + 1}`}
+                referrerPolicy="no-referrer"
+                loading={i === 0 ? 'eager' : 'lazy'}
+                draggable={false}
+                className="w-full h-full object-cover select-none"
+                onError={() => setBroken((b) => ({ ...b, [src]: true }))}
+              />
+            </button>
+          ))}
+        </div>
       </div>
 
-      {visible.length > 1 && (
+      <button
+        type="button"
+        aria-label="Agrandir la photo"
+        onClick={() => setViewerOpen(true)}
+        className="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-black/50 backdrop-blur flex items-center justify-center text-white hover:bg-black/70"
+      >
+        <ZoomIcon />
+      </button>
+
+      {multi && (
         <>
-          <div className="absolute bottom-3 inset-x-0 flex justify-center gap-1.5">
+          <div className="absolute bottom-3 inset-x-0 flex justify-center gap-1.5 pointer-events-none">
             {visible.map((src, i) => (
               <button
                 key={src}
                 type="button"
                 aria-label={`Photo ${i + 1}`}
-                onClick={() => goTo(i)}
-                className={`h-1.5 rounded-full transition-all ${
+                onClick={() => emblaApi?.scrollTo(i)}
+                className={`pointer-events-auto h-1.5 rounded-full transition-all ${
                   i === index ? 'w-5 bg-white' : 'w-1.5 bg-white/50'
                 }`}
               />
@@ -150,8 +160,19 @@ function Gallery({ candidate }) {
         photos={visible}
         startIndex={index}
         title={`${candidate.prenom} ${candidate.nom}`}
-        onClose={() => setViewerOpen(false)}
+        onClose={() => {
+          setViewerOpen(false)
+        }}
       />
     </div>
+  )
+}
+
+function ZoomIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M21 21l-4.5-4.5M11 8v6M8 11h6" />
+    </svg>
   )
 }

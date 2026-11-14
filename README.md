@@ -1,6 +1,6 @@
 # MissVote
 
-PWA React de notation des candidates Miss France — vote via 4 boutons (Moche, Moyen, Like, Super like), votes stockés en local, export Excel.
+PWA React de notation des candidates Miss France — vote via 4 boutons (Moche, Moyen, Like, Super like), votes stockés en local, export Excel, classement de groupe en pair-à-pair.
 
 ## Stack
 
@@ -10,6 +10,7 @@ PWA React de notation des candidates Miss France — vote via 4 boutons (Moche, 
 - Embla Carousel (défilement des photos)
 - React Router 6
 - SheetJS (`xlsx`) pour l'export
+- Trystero (WebRTC pair-à-pair) pour l'onglet Groupe
 - `vite-plugin-pwa` (Workbox)
 
 ## Prérequis
@@ -56,7 +57,8 @@ src/
 ├── assets/candidates.json     ← Données candidates (statique, bundlé)
 ├── components/                ← SwipeCard, ActionButtons, BottomNav, modales, etc.
 ├── hooks/useVotes.js          ← Lecture/écriture localStorage
-├── screens/                   ← SwipeScreen, ResultsScreen
+├── p2p/group.js               ← Connexion pair-à-pair de l'onglet Groupe
+├── screens/                   ← SwipeScreen, ResultsScreen, GroupScreen
 ├── utils/                     ← notes.js, exportExcel.js
 ├── App.jsx
 ├── main.jsx
@@ -72,6 +74,15 @@ Les votes sont stockés dans `localStorage` sous la clé `missVote_votes_<annee>
 ```
 
 Pour repartir de zéro : bouton **Réinitialiser** dans l'écran Résultats, ou `localStorage.clear()` en console.
+
+## Onglet Groupe (pair-à-pair)
+
+Chaque personne choisit un pseudo. Il n'y a qu'un seul salon : tous les appareils connectés se connectent directement entre eux en WebRTC et s'échangent leurs votes : l'onglet affiche le classement de chaque personne connectée et un classement commun (moyenne : Super Like 3 pts, Like 2, Moyen 1, Moche 0, ramenée sur 10).
+
+- **Pas de serveur applicatif, pas d'hôte** : maillage complet, chaque pair garde l'état de tous les autres. Si quelqu'un part, les autres continuent sans rien avoir à élire.
+- **Mise en relation** : via des relais Nostr publics (Trystero), uniquement pour échanger les offres WebRTC chiffrées. Les votes passent ensuite directement d'appareil à appareil.
+- **Résilience** : profil renvoyé à chaque nouveau venu et toutes les 10 s ; pair retiré après 35 s sans nouvelles ; reconnexion automatique au retour du réseau, au retour sur l'onglet et au rechargement (pseudo gardé dans `localStorage`, clé `missVote_profile`).
+- **Limites** : rien n'est conservé quand tout le monde est parti ; certains réseaux d'entreprise bloquent WebRTC sans serveur TURN ; prévu pour quelques dizaines de personnes connectées en même temps.
 
 ## Changer l'édition / les candidates
 

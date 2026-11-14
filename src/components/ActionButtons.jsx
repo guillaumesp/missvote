@@ -2,7 +2,7 @@ import { NOTES, NOTE_ORDER } from '../utils/notes'
 
 export default function ActionButtons({ onVote, disabled }) {
   return (
-    <div className="flex items-center justify-center gap-4 px-6 py-4">
+    <div className="flex items-center justify-center gap-4 px-6 py-3 shrink-0">
       {NOTE_ORDER.map((key) => {
         const n = NOTES[key]
         return (

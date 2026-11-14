@@ -45,6 +45,10 @@ function getSnapshot() {
   return current
 }
 
+// Accès hors React (module pair-à-pair)
+export const getVotes = getSnapshot
+export const subscribeVotes = subscribe
+
 // Synchronisation entre onglets
 if (typeof window !== 'undefined') {
   window.addEventListener('storage', (e) => {

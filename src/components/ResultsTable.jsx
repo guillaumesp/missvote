@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import { NOTES } from '../utils/notes'
 
+// L'entête et les lignes partagent la même grille pour rester alignées.
+// L'app fait au plus 430 px de large : une seule grille compacte pour toutes les tailles.
+const GRID = 'grid grid-cols-[36px_minmax(0,1.2fr)_minmax(0,1fr)_72px_32px] gap-2'
+
 const COLS = [
-  { key: 'photo', label: '', sortable: false, width: 'w-12' },
+  { key: 'photo', label: '', sortable: false },
   { key: 'name', label: 'Candidate', sortable: true },
   { key: 'region', label: 'Région', sortable: true },
   { key: 'note', label: 'Note', sortable: true },
@@ -31,13 +35,13 @@ export default function ResultsTable({ rows, onOpenPhoto, onEdit }) {
 
   return (
     <div className="px-3">
-      <div className="grid grid-cols-[40px_1fr_90px_90px_60px] gap-2 px-2 py-2 text-[10px] uppercase tracking-wider text-[var(--color-text-muted)] border-b border-[var(--color-border)]">
+      <div className={`${GRID} px-2 py-2 text-[10px] uppercase tracking-wider text-[var(--color-text-muted)] border-b border-[var(--color-border)]`}>
         {COLS.map((c) => (
           <button
             key={c.key}
             type="button"
             onClick={() => c.sortable && toggleSort(c.key)}
-            className={`text-left ${c.sortable ? 'cursor-pointer hover:text-[var(--color-gold-light)]' : ''}`}
+            className={`text-left whitespace-nowrap ${c.sortable ? 'cursor-pointer hover:text-[var(--color-gold-light)]' : ''}`}
           >
             {c.label}
             {c.sortable && sort.key === c.key && (
@@ -51,12 +55,12 @@ export default function ResultsTable({ rows, onOpenPhoto, onEdit }) {
         {sorted.map((row) => (
           <li
             key={row.candidate.id}
-            className="grid grid-cols-[40px_1fr_90px_90px_60px] gap-2 items-center px-2 py-2.5"
+            className={`${GRID} items-center px-2 py-2.5`}
           >
             <button
               type="button"
               onClick={() => onOpenPhoto?.(row.candidate)}
-              className="w-10 h-10 rounded-full overflow-hidden border border-[var(--color-border)] bg-[var(--color-surface-2)]"
+              className="w-9 h-9 rounded-full overflow-hidden border border-[var(--color-border)] bg-[var(--color-surface-2)]"
             >
               {row.candidate.photo ? (
                 <img
@@ -68,24 +72,21 @@ export default function ResultsTable({ rows, onOpenPhoto, onEdit }) {
                 />
               ) : null}
             </button>
-            <div className="min-w-0">
-              <div className="text-sm truncate">
-                {row.candidate.prenom} <span className="text-[var(--color-text-muted)]">{row.candidate.nom}</span>
-              </div>
-              <div className="text-[11px] text-[var(--color-text-muted)] truncate sm:hidden">
-                {row.candidate.region}
-              </div>
+            <div className="min-w-0 text-sm leading-tight">
+              <div className="truncate">{row.candidate.prenom}</div>
+              <div className="truncate text-[var(--color-text-muted)] text-xs">{row.candidate.nom}</div>
             </div>
-            <div className="text-xs text-[var(--color-text-muted)] truncate hidden sm:block">
+            <div className="min-w-0 text-xs text-[var(--color-text-muted)] truncate">
               {row.candidate.region}
             </div>
             <NoteBadge note={row.note} />
             <button
               type="button"
+              aria-label={`Modifier la note de ${row.candidate.prenom} ${row.candidate.nom}`}
               onClick={() => onEdit?.(row.candidate)}
-              className="text-[11px] px-2 py-1 rounded-md border border-[var(--color-border)] hover:border-[var(--color-gold)] hover:text-[var(--color-gold-light)]"
+              className="h-8 flex items-center justify-center rounded-md border border-[var(--color-border)] hover:border-[var(--color-gold)] hover:text-[var(--color-gold-light)]"
             >
-              Modifier
+              <PencilIcon />
             </button>
           </li>
         ))}
@@ -94,7 +95,16 @@ export default function ResultsTable({ rows, onOpenPhoto, onEdit }) {
   )
 }
 
-function NoteBadge({ note }) {
+function PencilIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 20h9" />
+      <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z" />
+    </svg>
+  )
+}
+
+export function NoteBadge({ note }) {
   if (!note) {
     return (
       <span className="text-xs text-[var(--color-text-muted)]/60 italic">—</span>
@@ -111,8 +121,7 @@ function NoteBadge({ note }) {
       }}
     >
       <span className="text-[10px]">{meta.emoji}</span>
-      <span className="hidden sm:inline">{meta.label}</span>
-      <span className="sm:hidden">{meta.short}</span>
+      <span>{meta.short}</span>
     </span>
   )
 }
