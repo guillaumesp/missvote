@@ -1,6 +1,6 @@
 # MissVote
 
-PWA React de notation des candidates Miss France — swipe à la Tinder (4 directions), votes stockés en local, export Excel.
+PWA React de notation des candidates Miss France — vote via 4 boutons (Moche, Moyen, Like, Super like), votes stockés en local, export Excel.
 
 ## Stack
 
@@ -103,7 +103,7 @@ Les votes sont stockés par édition (`missVote_votes_<annee>`) : changer d'édi
 
 ## Photos
 
-- **Carte de swipe** : taper sur le bord gauche/droit change de photo, taper au centre (ou la loupe) ouvre la visionneuse.
+- **Carte candidate** : la carte ne se glisse plus pour voter (vote uniquement via les boutons) ; glisser horizontalement ou taper sur le bord gauche/droit change de photo, taper au centre (ou la loupe) ouvre la visionneuse.
 - **Fiche candidate** (écran Résultats) : carrousel à faire défiler, tap pour agrandir.
 - **Visionneuse** : pinch, molette, double-tap ou boutons +/− pour zoomer (jusqu'à ×5), glisser pour se déplacer dans la photo zoomée, swipe ou flèches ←/→ pour changer de photo, Échap pour fermer.
 
