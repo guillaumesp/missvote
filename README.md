@@ -6,7 +6,8 @@ PWA React de notation des candidates Miss France — vote via 4 boutons (Moche, 
 
 - React 18 + Vite 6
 - Tailwind CSS v4
-- Framer Motion (swipe & animations)
+- Framer Motion (animations)
+- Embla Carousel (défilement des photos)
 - React Router 6
 - SheetJS (`xlsx`) pour l'export
 - `vite-plugin-pwa` (Workbox)
@@ -103,7 +104,7 @@ Les votes sont stockés par édition (`missVote_votes_<annee>`) : changer d'édi
 
 ## Photos
 
-- **Carte candidate** : la carte ne se glisse plus pour voter (vote uniquement via les boutons) ; glisser horizontalement ou taper sur le bord gauche/droit change de photo, taper au centre (ou la loupe) ouvre la visionneuse.
+- **Carte candidate** : la carte ne se glisse plus pour voter (vote uniquement via les boutons) ; les photos défilent dans un carrousel Embla (glisser horizontalement ou taper sur le bord gauche/droit), taper au centre (ou la loupe) ouvre la visionneuse.
 - **Fiche candidate** (écran Résultats) : carrousel à faire défiler, tap pour agrandir.
 - **Visionneuse** : pinch, molette, double-tap ou boutons +/− pour zoomer (jusqu'à ×5), glisser pour se déplacer dans la photo zoomée, swipe ou flèches ←/→ pour changer de photo, Échap pour fermer.
 

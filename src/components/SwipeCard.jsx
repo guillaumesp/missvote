@@ -1,56 +1,48 @@
 import { motion, useAnimationControls } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import useEmblaCarousel from 'embla-carousel-react'
 import { photosOf } from '../utils/photos'
 import PhotoViewer from './PhotoViewer'
-
-// Distance horizontale minimale (px) pour changer de photo par glissement
-const PHOTO_SWIPE_DISTANCE = 50
 
 export default function SwipeCard({ candidate, onSwipe, isTop, stackIndex = 0 }) {
   const controls = useAnimationControls()
   const cardRef = useRef(null)
-  const [imgError, setImgError] = useState(false)
+  const [failed, setFailed] = useState({})
   const [photoIndex, setPhotoIndex] = useState(0)
   const [viewerOpen, setViewerOpen] = useState(false)
   const photos = photosOf(candidate)
-  const currentPhoto = photos[photoIndex] ?? photos[0]
+  const multi = photos.length > 1
+
+  // Carrousel Embla : glisser horizontalement change de photo (jamais de vote)
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: multi,
+    watchDrag: isTop && multi
+  })
 
   useEffect(() => {
-    setImgError(false)
-    setPhotoIndex(0)
-  }, [candidate?.id])
-
-  useEffect(() => {
-    setImgError(false)
-  }, [photoIndex])
-
-  const changePhoto = (delta) => {
-    if (photos.length < 2) return
-    setPhotoIndex((i) => (i + delta + photos.length) % photos.length)
-  }
-
-  // Glissement horizontal : photo suivante/précédente (la carte ne bouge pas, pas de vote)
-  const handlePanEnd = (_, info) => {
-    if (!isTop) return
-    const { x: dx, y: dy } = info.offset
-    if (Math.abs(dx) < PHOTO_SWIPE_DISTANCE || Math.abs(dx) < Math.abs(dy)) return
-    changePhoto(dx < 0 ? 1 : -1)
-  }
-
-  // Tap : bord gauche/droit = photo précédente/suivante, centre = zoom
-  const handleTap = (event, info) => {
-    if (!isTop) return
-    const rect = cardRef.current?.getBoundingClientRect()
-    if (!rect) return
-    const rel = (info.point.x - window.scrollX - rect.left) / rect.width
-    if (photos.length > 1 && rel < 0.3) {
-      changePhoto(-1)
-    } else if (photos.length > 1 && rel > 0.7) {
-      changePhoto(1)
-    } else if (photos.length) {
-      setViewerOpen(true)
+    if (!emblaApi) return
+    const onSelect = () => setPhotoIndex(emblaApi.selectedScrollSnap())
+    onSelect()
+    emblaApi.on('select', onSelect).on('reInit', onSelect)
+    return () => {
+      emblaApi.off('select', onSelect).off('reInit', onSelect)
     }
-  }
+  }, [emblaApi])
+
+  // Tap (Embla bloque le clic après un glissement) :
+  // bord gauche/droit = photo précédente/suivante, centre = zoom
+  const handleClick = useCallback(
+    (event) => {
+      if (!isTop || !photos.length) return
+      const rect = cardRef.current?.getBoundingClientRect()
+      if (!rect) return
+      const rel = (event.clientX - rect.left) / rect.width
+      if (multi && rel < 0.3) emblaApi?.scrollPrev()
+      else if (multi && rel > 0.7) emblaApi?.scrollNext()
+      else setViewerOpen(true)
+    },
+    [isTop, multi, photos.length, emblaApi]
+  )
 
   const flyOff = async (note) => {
     const target = {
@@ -89,28 +81,37 @@ export default function SwipeCard({ candidate, onSwipe, isTop, stackIndex = 0 })
         y: isTop ? 0 : offsetY,
         scale: isTop ? 1 : scale,
         zIndex: 100 - stackIndex,
-        touchAction: 'pan-y'
       }}
-      onPanEnd={isTop ? handlePanEnd : undefined}
-      onTap={isTop ? handleTap : undefined}
       animate={controls}
       initial={false}
     >
       <div className="relative w-full h-full rounded-3xl overflow-hidden bg-[var(--color-surface)] border border-[var(--color-border)] shadow-gold">
-        {/* Photo */}
+        {/* Photos (carrousel Embla) */}
         <div className="absolute inset-0">
-          {imgError || !currentPhoto ? (
-            <PlaceholderSilhouette />
+          {photos.length ? (
+            <div className="h-full overflow-hidden" ref={emblaRef} onClick={handleClick}>
+              <div className="flex h-full touch-pan-y">
+                {photos.map((src, i) => (
+                  <div key={src} className="relative flex-[0_0_100%] min-w-0 h-full">
+                    {failed[i] ? (
+                      <PlaceholderSilhouette />
+                    ) : (
+                      <img
+                        src={src}
+                        referrerPolicy="no-referrer"
+                        alt={`${candidate.prenom} ${candidate.nom} – photo ${i + 1}`}
+                        className="w-full h-full object-cover"
+                        draggable={false}
+                        loading={i === 0 ? 'eager' : 'lazy'}
+                        onError={() => setFailed((f) => ({ ...f, [i]: true }))}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
           ) : (
-            <img
-              key={currentPhoto}
-              src={currentPhoto}
-              referrerPolicy="no-referrer"
-              alt={`${candidate.prenom} ${candidate.nom}`}
-              className="w-full h-full object-cover"
-              draggable={false}
-              onError={() => setImgError(true)}
-            />
+            <PlaceholderSilhouette />
           )}
           {/* Bottom gradient */}
           <div
@@ -149,7 +150,7 @@ export default function SwipeCard({ candidate, onSwipe, isTop, stackIndex = 0 })
         )}
 
         {/* Info overlay */}
-        <div className="absolute inset-x-0 bottom-0 p-5 text-white">
+        <div className="absolute inset-x-0 bottom-0 p-5 text-white pointer-events-none">
           <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-[11px] uppercase tracking-wider mb-2 border border-[var(--color-gold-light)]/40 bg-black/40 backdrop-blur text-[var(--color-gold-light)]">
             {candidate.region}
           </div>
@@ -171,7 +172,7 @@ export default function SwipeCard({ candidate, onSwipe, isTop, stackIndex = 0 })
               rel="noreferrer noopener"
               onClick={(e) => e.stopPropagation()}
               onPointerDown={(e) => e.stopPropagation()}
-              className="mt-3 inline-flex items-center gap-1.5 text-xs text-[var(--color-gold-light)] hover:underline"
+              className="pointer-events-auto mt-3 inline-flex items-center gap-1.5 text-xs text-[var(--color-gold-light)] hover:underline"
             >
               <InstagramIcon /> @{candidate.instagram}
             </a>
