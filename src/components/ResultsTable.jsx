@@ -1,10 +1,15 @@
 import { useState } from 'react'
 import { NOTES } from '../utils/notes'
 
+// Mobile : la région passe sous le nom, donc 4 colonnes ; à partir de sm : 5 colonnes.
+// L'entête et les lignes partagent la même grille pour rester alignées.
+const GRID =
+  'grid grid-cols-[40px_minmax(0,1fr)_76px_64px] sm:grid-cols-[40px_minmax(0,1fr)_110px_110px_64px] gap-2'
+
 const COLS = [
-  { key: 'photo', label: '', sortable: false, width: 'w-12' },
+  { key: 'photo', label: '', sortable: false },
   { key: 'name', label: 'Candidate', sortable: true },
-  { key: 'region', label: 'Région', sortable: true },
+  { key: 'region', label: 'Région', sortable: true, desktopOnly: true },
   { key: 'note', label: 'Note', sortable: true },
   { key: 'action', label: '', sortable: false }
 ]
@@ -31,13 +36,13 @@ export default function ResultsTable({ rows, onOpenPhoto, onEdit }) {
 
   return (
     <div className="px-3">
-      <div className="grid grid-cols-[40px_1fr_90px_90px_60px] gap-2 px-2 py-2 text-[10px] uppercase tracking-wider text-[var(--color-text-muted)] border-b border-[var(--color-border)]">
+      <div className={`${GRID} px-2 py-2 text-[10px] uppercase tracking-wider text-[var(--color-text-muted)] border-b border-[var(--color-border)]`}>
         {COLS.map((c) => (
           <button
             key={c.key}
             type="button"
             onClick={() => c.sortable && toggleSort(c.key)}
-            className={`text-left ${c.sortable ? 'cursor-pointer hover:text-[var(--color-gold-light)]' : ''}`}
+            className={`text-left ${c.desktopOnly ? 'hidden sm:block' : ''} ${c.sortable ? 'cursor-pointer hover:text-[var(--color-gold-light)]' : ''}`}
           >
             {c.label}
             {c.sortable && sort.key === c.key && (
@@ -51,7 +56,7 @@ export default function ResultsTable({ rows, onOpenPhoto, onEdit }) {
         {sorted.map((row) => (
           <li
             key={row.candidate.id}
-            className="grid grid-cols-[40px_1fr_90px_90px_60px] gap-2 items-center px-2 py-2.5"
+            className={`${GRID} items-center px-2 py-2.5`}
           >
             <button
               type="button"
