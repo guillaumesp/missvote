@@ -1,70 +1,48 @@
-import { motion, useMotionValue, useTransform, useAnimationControls } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
-import { NOTES } from '../utils/notes'
+import { motion, useAnimationControls } from 'framer-motion'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import useEmblaCarousel from 'embla-carousel-react'
 import { photosOf } from '../utils/photos'
 import PhotoViewer from './PhotoViewer'
 
-const SWIPE_THRESHOLD = 110
-
-// Map drag offset to active direction
-function directionFor(x, y) {
-  const absX = Math.abs(x)
-  const absY = Math.abs(y)
-  if (absX < 30 && absY < 30) return null
-  if (absX > absY) return x > 0 ? 'like' : 'moche'
-  return y > 0 ? 'moyen' : 'super_like'
-}
-
 export default function SwipeCard({ candidate, onSwipe, isTop, stackIndex = 0 }) {
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
   const controls = useAnimationControls()
   const cardRef = useRef(null)
-  const [imgError, setImgError] = useState(false)
+  const [failed, setFailed] = useState({})
   const [photoIndex, setPhotoIndex] = useState(0)
   const [viewerOpen, setViewerOpen] = useState(false)
   const photos = photosOf(candidate)
-  const currentPhoto = photos[photoIndex] ?? photos[0]
+  const multi = photos.length > 1
 
-  const rotate = useTransform(x, [-300, 0, 300], [-18, 0, 18])
-
-  // Overlay opacities for each direction
-  const likeOp = useTransform([x, y], ([lx, ly]) =>
-    lx > 0 && Math.abs(lx) > Math.abs(ly) ? Math.min(1, lx / SWIPE_THRESHOLD) : 0
-  )
-  const mocheOp = useTransform([x, y], ([lx, ly]) =>
-    lx < 0 && Math.abs(lx) > Math.abs(ly) ? Math.min(1, -lx / SWIPE_THRESHOLD) : 0
-  )
-  const superOp = useTransform([x, y], ([lx, ly]) =>
-    ly < 0 && Math.abs(ly) > Math.abs(lx) ? Math.min(1, -ly / SWIPE_THRESHOLD) : 0
-  )
-  const moyenOp = useTransform([x, y], ([lx, ly]) =>
-    ly > 0 && Math.abs(ly) > Math.abs(lx) ? Math.min(1, ly / SWIPE_THRESHOLD) : 0
-  )
+  // Carrousel Embla : glisser horizontalement change de photo (jamais de vote)
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: multi,
+    watchDrag: isTop && multi
+  })
 
   useEffect(() => {
-    setImgError(false)
-    setPhotoIndex(0)
-  }, [candidate?.id])
-
-  useEffect(() => {
-    setImgError(false)
-  }, [photoIndex])
-
-  // Tap (sans drag) : bord gauche/droit = photo précédente/suivante, centre = zoom
-  const handleTap = (event, info) => {
-    if (!isTop) return
-    const rect = cardRef.current?.getBoundingClientRect()
-    if (!rect) return
-    const rel = (info.point.x - window.scrollX - rect.left) / rect.width
-    if (photos.length > 1 && rel < 0.3) {
-      setPhotoIndex((i) => (i - 1 + photos.length) % photos.length)
-    } else if (photos.length > 1 && rel > 0.7) {
-      setPhotoIndex((i) => (i + 1) % photos.length)
-    } else if (photos.length) {
-      setViewerOpen(true)
+    if (!emblaApi) return
+    const onSelect = () => setPhotoIndex(emblaApi.selectedScrollSnap())
+    onSelect()
+    emblaApi.on('select', onSelect).on('reInit', onSelect)
+    return () => {
+      emblaApi.off('select', onSelect).off('reInit', onSelect)
     }
-  }
+  }, [emblaApi])
+
+  // Tap (Embla bloque le clic après un glissement) :
+  // bord gauche/droit = photo précédente/suivante, centre = zoom
+  const handleClick = useCallback(
+    (event) => {
+      if (!isTop || !photos.length) return
+      const rect = cardRef.current?.getBoundingClientRect()
+      if (!rect) return
+      const rel = (event.clientX - rect.left) / rect.width
+      if (multi && rel < 0.3) emblaApi?.scrollPrev()
+      else if (multi && rel > 0.7) emblaApi?.scrollNext()
+      else setViewerOpen(true)
+    },
+    [isTop, multi, photos.length, emblaApi]
+  )
 
   const flyOff = async (note) => {
     const target = {
@@ -92,20 +70,6 @@ export default function SwipeCard({ candidate, onSwipe, isTop, stackIndex = 0 })
     return () => window.removeEventListener('missvote:swipe', handler)
   }, [isTop, candidate?.id])
 
-  const handleDragEnd = (_, info) => {
-    const dir = directionFor(info.offset.x, info.offset.y)
-    const passes =
-      (dir === 'like' && info.offset.x > SWIPE_THRESHOLD) ||
-      (dir === 'moche' && info.offset.x < -SWIPE_THRESHOLD) ||
-      (dir === 'super_like' && info.offset.y < -SWIPE_THRESHOLD) ||
-      (dir === 'moyen' && info.offset.y > SWIPE_THRESHOLD)
-    if (passes) {
-      flyOff(dir)
-    } else {
-      controls.start({ x: 0, y: 0, transition: { type: 'spring', stiffness: 400, damping: 30 } })
-    }
-  }
-
   const offsetY = stackIndex * 8
   const scale = 1 - stackIndex * 0.04
 
@@ -114,36 +78,40 @@ export default function SwipeCard({ candidate, onSwipe, isTop, stackIndex = 0 })
       ref={cardRef}
       className="absolute inset-0 select-none"
       style={{
-        x: isTop ? x : 0,
-        y: isTop ? y : offsetY,
-        rotate: isTop ? rotate : 0,
+        y: isTop ? 0 : offsetY,
         scale: isTop ? 1 : scale,
         zIndex: 100 - stackIndex,
-        touchAction: 'none'
       }}
-      drag={isTop}
-      dragElastic={0.7}
-      dragMomentum={false}
-      onDragEnd={isTop ? handleDragEnd : undefined}
-      onTap={isTop ? handleTap : undefined}
       animate={controls}
       initial={false}
     >
       <div className="relative w-full h-full rounded-3xl overflow-hidden bg-[var(--color-surface)] border border-[var(--color-border)] shadow-gold">
-        {/* Photo */}
+        {/* Photos (carrousel Embla) */}
         <div className="absolute inset-0">
-          {imgError || !currentPhoto ? (
-            <PlaceholderSilhouette />
+          {photos.length ? (
+            <div className="h-full overflow-hidden" ref={emblaRef} onClick={handleClick}>
+              <div className="flex h-full touch-pan-y">
+                {photos.map((src, i) => (
+                  <div key={src} className="relative flex-[0_0_100%] min-w-0 h-full">
+                    {failed[i] ? (
+                      <PlaceholderSilhouette />
+                    ) : (
+                      <img
+                        src={src}
+                        referrerPolicy="no-referrer"
+                        alt={`${candidate.prenom} ${candidate.nom} – photo ${i + 1}`}
+                        className="w-full h-full object-cover"
+                        draggable={false}
+                        loading={i === 0 ? 'eager' : 'lazy'}
+                        onError={() => setFailed((f) => ({ ...f, [i]: true }))}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
           ) : (
-            <img
-              key={currentPhoto}
-              src={currentPhoto}
-              referrerPolicy="no-referrer"
-              alt={`${candidate.prenom} ${candidate.nom}`}
-              className="w-full h-full object-cover"
-              draggable={false}
-              onError={() => setImgError(true)}
-            />
+            <PlaceholderSilhouette />
           )}
           {/* Bottom gradient */}
           <div
@@ -182,7 +150,7 @@ export default function SwipeCard({ candidate, onSwipe, isTop, stackIndex = 0 })
         )}
 
         {/* Info overlay */}
-        <div className="absolute inset-x-0 bottom-0 p-5 text-white">
+        <div className="absolute inset-x-0 bottom-0 p-5 text-white pointer-events-none">
           <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-[11px] uppercase tracking-wider mb-2 border border-[var(--color-gold-light)]/40 bg-black/40 backdrop-blur text-[var(--color-gold-light)]">
             {candidate.region}
           </div>
@@ -204,46 +172,13 @@ export default function SwipeCard({ candidate, onSwipe, isTop, stackIndex = 0 })
               rel="noreferrer noopener"
               onClick={(e) => e.stopPropagation()}
               onPointerDown={(e) => e.stopPropagation()}
-              className="mt-3 inline-flex items-center gap-1.5 text-xs text-[var(--color-gold-light)] hover:underline"
+              className="pointer-events-auto mt-3 inline-flex items-center gap-1.5 text-xs text-[var(--color-gold-light)] hover:underline"
             >
               <InstagramIcon /> @{candidate.instagram}
             </a>
           )}
         </div>
 
-        {/* Direction overlays */}
-        {isTop && (
-          <>
-            <DirectionalBadge
-              opacity={likeOp}
-              label="LIKE"
-              emoji="💚"
-              color={NOTES.like.hex}
-              align="left"
-            />
-            <DirectionalBadge
-              opacity={mocheOp}
-              label="MOCHE"
-              emoji="❌"
-              color={NOTES.moche.hex}
-              align="right"
-            />
-            <DirectionalBadge
-              opacity={superOp}
-              label="SUPER LIKE"
-              emoji="⭐"
-              color={NOTES.super_like.hex}
-              align="top"
-            />
-            <DirectionalBadge
-              opacity={moyenOp}
-              label="MOYEN"
-              emoji="😐"
-              color={NOTES.moyen.hex}
-              align="bottom"
-            />
-          </>
-        )}
       </div>
       {isTop && (
         <PhotoViewer
@@ -264,24 +199,6 @@ function ZoomIcon() {
       <circle cx="11" cy="11" r="7" />
       <path d="M21 21l-4.5-4.5M11 8v6M8 11h6" />
     </svg>
-  )
-}
-
-function DirectionalBadge({ opacity, label, emoji, color, align }) {
-  const pos = {
-    left: 'top-8 left-6 -rotate-12',
-    right: 'top-8 right-6 rotate-12',
-    top: 'top-8 left-1/2 -translate-x-1/2',
-    bottom: 'bottom-32 left-1/2 -translate-x-1/2'
-  }[align]
-  return (
-    <motion.div
-      style={{ opacity, borderColor: color, color }}
-      className={`absolute ${pos} px-4 py-1.5 rounded-md border-4 font-display text-2xl tracking-wider bg-black/30 backdrop-blur-sm pointer-events-none`}
-    >
-      <span className="mr-2">{emoji}</span>
-      {label}
-    </motion.div>
   )
 }
 

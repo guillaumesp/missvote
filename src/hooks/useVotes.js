@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useSyncExternalStore } from 'react'
 
 import data from '../assets/candidates.json'
 
@@ -17,44 +17,60 @@ function readVotes() {
   }
 }
 
-function writeVotes(votes) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(votes))
+// Store unique partagé par tous les composants : un vote émis sur l'écran
+// Swipe met immédiatement à jour la navigation et l'écran Résultats.
+let current = readVotes()
+const listeners = new Set()
+
+function emit() {
+  listeners.forEach((l) => l())
+}
+
+function setVotes(next) {
+  current = next
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
+  } catch {
+    // stockage indisponible : on garde les votes en mémoire
+  }
+  emit()
+}
+
+function subscribe(listener) {
+  listeners.add(listener)
+  return () => listeners.delete(listener)
+}
+
+function getSnapshot() {
+  return current
+}
+
+// Synchronisation entre onglets
+if (typeof window !== 'undefined') {
+  window.addEventListener('storage', (e) => {
+    if (e.key === STORAGE_KEY) {
+      current = readVotes()
+      emit()
+    }
+  })
 }
 
 export function useVotes() {
-  const [votes, setVotes] = useState(readVotes)
-
-  useEffect(() => {
-    const onStorage = (e) => {
-      if (e.key === STORAGE_KEY) setVotes(readVotes())
-    }
-    window.addEventListener('storage', onStorage)
-    return () => window.removeEventListener('storage', onStorage)
-  }, [])
+  const votes = useSyncExternalStore(subscribe, getSnapshot)
 
   const vote = useCallback((candidateId, note) => {
-    setVotes((prev) => {
-      const next = { ...prev, [candidateId]: note }
-      writeVotes(next)
-      return next
-    })
+    setVotes({ ...current, [candidateId]: note })
   }, [])
 
-  const editVote = useCallback((candidateId, note) => {
-    vote(candidateId, note)
-  }, [vote])
+  const editVote = vote
 
   const removeVote = useCallback((candidateId) => {
-    setVotes((prev) => {
-      const next = { ...prev }
-      delete next[candidateId]
-      writeVotes(next)
-      return next
-    })
+    const next = { ...current }
+    delete next[candidateId]
+    setVotes(next)
   }, [])
 
   const resetVotes = useCallback(() => {
-    writeVotes({})
     setVotes({})
   }, [])
 
